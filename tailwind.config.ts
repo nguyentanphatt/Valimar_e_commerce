@@ -11,8 +11,15 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "dark": '#141414',
+        "darkblue": '#00d0ff',
       },
     },
+    screens:{
+      sm: "375px",
+      md: "768px",
+      lg: "1200px",
+    }
   },
   plugins: [],
 } satisfies Config;
