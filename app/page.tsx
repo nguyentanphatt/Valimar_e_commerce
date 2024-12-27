@@ -6,76 +6,13 @@ import Image from "next/image";
 import Account from "@/public/assets/icon/account.svg";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-const banner = [
-  {
-    id: 1,
-    name: "Silent Hill 2",
-    image:
-      "https://valimar-image.s3.ap-southeast-2.amazonaws.com/silenthill2.jpg",
-  },
-  {
-    id: 2,
-    name: "Metaphor Re:Fantazio",
-    image: "https://valimar-image.s3.ap-southeast-2.amazonaws.com/metaphor.jpg",
-  },
-  {
-    id: 3,
-    name: "Stalker 2",
-    image: "https://valimar-image.s3.ap-southeast-2.amazonaws.com/stalker2.jpg",
-  },
-  {
-    id: 4,
-    name: "Alan Wake 2",
-    image:
-      "https://valimar-image.s3.ap-southeast-2.amazonaws.com/alanwake2.jpg",
-  },
-];
+import Banner from "@/components/common/Banner";
+import SearchBar from "@/components/ui/SearchBar";
+import Button from "@/components/ui/Button";
+
 
 export default function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleSwap = (direction: string) => {
-    if (direction === "left") {
-      setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + banner.length) % banner.length
-      );
-    } else if (direction === "right") {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % banner.length);
-    }
-  };
-
-  const variants = {
-    left: {
-      scale: 0.8,
-      x: "-50%",
-      opacity: 0.5,
-      zIndex: 10,
-    },
-    center: {
-      scale: 1.2,
-      x: "0%",
-      opacity: 1,
-      zIndex: 20,
-    },
-    right: {
-      scale: 0.8,
-      x: "50%",
-      opacity: 0.5,
-      zIndex: 10,
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.5,
-    },
-  };
-
-  const getPosition = (index: number) => {
-    if (index === currentIndex) return "center";
-    if (index === (currentIndex - 1 + banner.length) % banner.length)
-      return "left";
-    if (index === (currentIndex + 1) % banner.length) return "right";
-    return "exit";
-  };
+  
 
   return (
     <div>
@@ -88,39 +25,19 @@ export default function Home() {
           className="sm:hidden md:flex lg:size-10"
         />
       </div>
-      <div className="flex flex-col items-center">
-        <p className="text-white font-bold text-xl text-center py-2 max-w-60">
+      <div className="flex flex-col items-center gap-10 lg:py-10">
+        <p className="text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
           <span className="text-darkblue">special discount</span>
         </p>
+        <div className="md:flex flex-row gap-2 w-full px-28 lg:px-36 hidden">
+          <SearchBar className="hidden md:flex w-full px-3 lg:py-1.5"/>
+          <Button size="md" text="Search" className="lg:w-28 lg:h-10 lg:text-lg"/>
+        </div>
+        <p className="text-white font-bold text-3xl lg:text-5xl hidden md:flex">BEST FOR YOU</p>
       </div>
-      <div className="relative flex items-center justify-center overflow-hidden h-40">
-        {banner.map((item, index) => (
-          <motion.div
-            key={item.id}
-            className="absolute cursor-pointer"
-            variants={variants}
-            initial={getPosition(index)}
-            animate={getPosition(index)}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            onClick={() => {
-              if (getPosition(index) === "left") handleSwap("left");
-              if (getPosition(index) === "right") handleSwap("right");
-            }}
-          >
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={index === currentIndex ? 250 : 200}
-              height={index === currentIndex ? 150 : 100}
-              className="rounded-xl"
-            />
-            {getPosition(index) === "center" && (
-              <p className="absolute text-white bottom-6 ml-2 text-sm hidden md:flex">{item.name}</p>
-            )}
-          </motion.div>
-        ))}
-      </div>
+      <Banner />
+      <p className="text-white">hello</p>
     </div>
   );
 }
