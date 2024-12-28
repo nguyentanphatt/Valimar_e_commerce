@@ -33,7 +33,6 @@ const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [xOffset, setXOffset] = useState("-50%");
 
-  // Adjust xOffset dynamically based on screen size
   useEffect(() => {
     const updateXOffset = () => {
       if (window.innerWidth >= 768 ) {
@@ -122,8 +121,8 @@ const Banner = () => {
             />
           </div>
           {getPosition(index) === "center" && (
-            <div className="absolute md:bottom-2 lg:bottom-16 hidden md:flex md:flex-col ml-2 md:ml-5 md:gap-2 lg:gap-5 bg-black/40 p-3 rounded">
-              <p className=" text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold">
+            <div className="absolute md:bottom-2 lg:bottom-16 hidden md:flex md:flex-col ml-2 md:ml-5 md:gap-2 lg:gap-5 ">
+              <p className=" text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold black-text-stroke">
                 {item.name}{" "}
                 <span className="text-darkblue text-xl lg:text-3xl font-bold">NEW</span>
               </p>
