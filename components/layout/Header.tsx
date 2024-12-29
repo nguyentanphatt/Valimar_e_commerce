@@ -11,9 +11,6 @@ const Header = () => {
        </div>
         <h1 className='text-white font-bold text-xl md:text-2xl lg:text-4xl'>VALIMAR</h1>
     </div>
-    {/* <div className='md:hidden border-2 border-white hover:border-darkblue rounded-full mt-3 mx-12'>
-      <input type="text" className='bg-dark w-full rounded-full outline-none text-white px-5' placeholder='Search...'/>
-    </div> */}
     <SearchBar className='mx-12 mt-3 md:hidden'/>
    </div>
   )

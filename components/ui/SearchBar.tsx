@@ -4,7 +4,7 @@ export default function SearchBar({ className }: { className?: string }) {
   return (
     <div
       className={twMerge(
-        "border-2 border-white hover:border-darkblue rounded-full",
+        "border-2 border-white hover:border-darkblue rounded-full bg-dark",
         className
       )}
     >

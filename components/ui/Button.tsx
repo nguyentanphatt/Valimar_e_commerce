@@ -7,7 +7,7 @@ const classes = cva("bg-darkblue flex items-center justify-center rounded-2xl", 
     size: {
       sm: "w-16 h-5 text-sm",
       md: "w-24 h-8 text-base",
-      lg: "w-28 h-0 text-xl"
+      lg: "w-28 h-10 text-xl"
     },
 
   },
