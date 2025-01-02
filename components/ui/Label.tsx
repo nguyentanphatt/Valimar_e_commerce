@@ -6,15 +6,17 @@ export default function ({
     title,
     className,
     starSize,
+    textProps,
 }: {
     title:string,
     className?:string,
-    starSize?:string
+    starSize?:string,
+    textProps?:string
 }) {
   return (
-    <div className={twMerge("flex flex-row justify-center gap-2 lg:mt-20", className)}>
-      <Image src={star} alt="star" className={twMerge("hidden md:flex size-7 lg:size-11", starSize)} />
-      <p className="text-white uppercase font-bold text-3xl lg:text-5xl hidden md:flex">
+    <div className={twMerge("flex flex-row justify-center gap-2 mt-4 md:mt-10 lg:mt-20", className)}>
+      <Image src={star} alt="star" className={twMerge("size-7 lg:size-11", starSize)} />
+      <p className="text-white uppercase font-medium md:font-bold sm:text-base md:text-3xl lg:text-5xl">
        {title}
       </p>
     </div>
