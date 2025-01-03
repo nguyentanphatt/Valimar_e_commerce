@@ -122,7 +122,7 @@ const Banner = () => {
           </div>
           {getPosition(index) === "center" && (
             <div className="absolute md:bottom-2 lg:bottom-16 hidden md:flex md:flex-col ml-2 md:ml-5 md:gap-2 lg:gap-5 ">
-              <p className=" text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold black-text-stroke">
+              <p className=" text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold text-shadow-xl">
                 {item.name}{" "}
                 <span className="text-darkblue text-xl lg:text-3xl font-bold">NEW</span>
               </p>

@@ -13,6 +13,7 @@ export default {
         foreground: "var(--foreground)",
         "dark": '#141414',
         "darkblue": '#00d0ff',
+        "banner":'#007EA4',
       },
     },
     screens:{
@@ -21,5 +22,7 @@ export default {
       lg: "1200px",
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-textshadow'),
+  ],
 } satisfies Config;
