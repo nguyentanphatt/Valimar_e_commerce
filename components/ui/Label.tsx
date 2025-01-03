@@ -1,5 +1,5 @@
 import Image from "next/image";
-import star from "@/public/assets/icon/star.svg"
+import Star from "@/public/assets/icon/star.svg"
 import { twMerge } from "tailwind-merge";
 
 export default function ({
@@ -15,7 +15,7 @@ export default function ({
 }) {
   return (
     <div className={twMerge("flex flex-row justify-center gap-2 mt-4 md:mt-10 lg:mt-20", className)}>
-      <Image src={star} alt="star" className={twMerge("size-7 lg:size-11", starSize)} />
+      <Star className={twMerge("size-7 lg:size-11", starSize)} />
       <p className="text-white uppercase font-medium md:font-bold sm:text-base md:text-3xl lg:text-5xl">
        {title}
       </p>

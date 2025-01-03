@@ -15,6 +15,7 @@ import hollow_banner from "@/public/assets/image/hollow.jpg";
 import AdvertismentBanner from "@/components/common/AdvertismentBanner";
 import Label from "@/components/ui/Label";
 import ItemSection from "@/components/ui/ItemSection";
+import Arrowright from "@/public/assets/icon/arrow-up-right.svg";
 
 import acval from "@/public/assets/image/acvalhalla.jpg";
 import among from "@/public/assets/image/among.jpg";
@@ -41,6 +42,7 @@ import spider from "@/public/assets/image/spiderman2.jpg";
 import starfield from "@/public/assets/image/starfield.jpg";
 import supermario from "@/public/assets/image/supermariobros.jpg";
 import avatar from "@/public/assets/image/avatar.jpg";
+import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   const [leftImage, leftAnimate] = useAnimate();
@@ -266,18 +268,12 @@ export default function Home() {
     },
   ];
 
-
-
   return (
     <div>
       <div className="md:flex md:items-center md:justify-center md:gap-14 lg:gap-24 md:py-5">
         <Header />
         <Navbar />
-        <Image
-          src={Account}
-          alt="acc"
-          className="sm:hidden md:flex lg:size-10"
-        />
+        <Account className="sm:hidden md:flex lg:size-10" />
       </div>
       <div className="relative flex flex-col items-center gap-10 lg:py-10 md:overflow-x-hidden">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
@@ -317,23 +313,25 @@ export default function Home() {
         />
       </AdvertismentBanner>
       <Label title="Special Deals" starSize="hidden md:flex" />
-      <ItemSection data={special_deal} itemPerPage={4} isNew/>
-      <AdvertismentBanner title="Persona 3 reload get it today" bgColor="md:bg-banner">
+      <ItemSection data={special_deal} itemPerPage={4} isNew />
+      <AdvertismentBanner
+        title="Persona 3 reload get it today"
+        bgColor="md:bg-banner"
+      >
         <Image
           src={per3_banner}
           alt="Persona 3"
           className="w-full md:w-[350px] lg:w-[550px] h-full object-cover"
         />
       </AdvertismentBanner>
-
       <Label title="New release" starSize="hidden md:flex" />
-
       <ItemSection
         data={new_releases}
         itemPerPage={6}
         largeItemId={[2, 4, 7, 8]}
         className="grid grid-cols-8 lg:grid-cols-4 gap-x-36 md:gap-x-56 gap-y-4"
       />
+      <Footer />
     </div>
   );
 }
