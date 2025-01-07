@@ -1,9 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Navbar from "@/components/common/Navbar";
-import Header from "@/components/layout/Header";
 import Image from "next/image";
-import Account from "@/public/assets/icon/account.svg";
 import { motion, useAnimate } from "framer-motion";
 import Banner from "@/components/common/Banner";
 import SearchBar from "@/components/ui/SearchBar";
@@ -15,7 +12,6 @@ import hollow_banner from "@/public/assets/image/hollow.jpg";
 import AdvertismentBanner from "@/components/common/AdvertismentBanner";
 import Label from "@/components/ui/Label";
 import ItemSection from "@/components/ui/ItemSection";
-import Arrowright from "@/public/assets/icon/arrow-up-right.svg";
 
 import acval from "@/public/assets/image/acvalhalla.jpg";
 import among from "@/public/assets/image/among.jpg";
@@ -42,7 +38,6 @@ import spider from "@/public/assets/image/spiderman2.jpg";
 import starfield from "@/public/assets/image/starfield.jpg";
 import supermario from "@/public/assets/image/supermariobros.jpg";
 import avatar from "@/public/assets/image/avatar.jpg";
-import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   const [leftImage, leftAnimate] = useAnimate();
@@ -270,18 +265,13 @@ export default function Home() {
 
   return (
     <div>
-      <div className="md:flex md:items-center md:justify-center md:gap-14 lg:gap-24 md:py-5">
-        <Header />
-        <Navbar />
-        <Account className="sm:hidden md:flex lg:size-10" />
-      </div>
       <div className="relative flex flex-col items-center gap-10 lg:py-10 md:overflow-x-hidden">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
           <span className="text-darkblue">special discount</span>
         </p>
         <div className="md:flex flex-row gap-2 w-full px-28 lg:px-36 hidden z-20">
-          <SearchBar className="hidden md:flex w-full px-3 lg:py-1.5 md:backdrop-blur-lg" />
+          <SearchBar className="hidden md:flex w-full md:w-[70%] xl:w-[50%] lg:ml-6 xl:ml-[20%] px-3 lg:py-1.5 md:backdrop-blur-lg" />
           <Button
             size="md"
             text="Search"
@@ -331,7 +321,6 @@ export default function Home() {
         largeItemId={[2, 4, 7, 8]}
         className="grid grid-cols-8 lg:grid-cols-4 gap-x-36 md:gap-x-56 gap-y-4"
       />
-      <Footer />
     </div>
   );
 }
