@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Star from "@/public/assets/icon/star.svg"
+import { Star } from "@/constant/image";
 import { twMerge } from "tailwind-merge";
 
 export default function ({

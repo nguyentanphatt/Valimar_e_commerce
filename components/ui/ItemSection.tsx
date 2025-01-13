@@ -1,59 +1,53 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ItemCard from "./ItemCard";
-import { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
-
-interface Item {
-  id: number;
-  name: string;
-  price: number;
-  discount_price: number;
-  percent_discount: number;
-  image: StaticImageData;
-}
+import { ItemSectionProps } from "@/constant/type";
 
 export default function ItemSection({
   data,
-  itemPerPage,
+  itemPerPage = 5,
   className,
   largeItemId,
   isNew = false,
-}: {
-  data: Item[];
-  itemPerPage: number;
-  className?: string;
-  largeItemId?: number[];
-  isNew?:boolean;
-}) {
+}: ItemSectionProps) {
   const [lgScreen, setLgScreen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [calculatedItemPerPage, setCalculatedItemPerPage] = useState(itemPerPage);
+
+  const calculateItemPerPage = () => {
+    const width = window.innerWidth;
+    if (width >= 1900) return 6;
+    if (width >= 1440) return 5;
+    if (width >= 1200) return 4;
+    return 3;
+  };
 
   useEffect(() => {
     const handleResize = () => {
       setLgScreen(window.innerWidth >= 1200);
+      setCalculatedItemPerPage(calculateItemPerPage());
     };
 
-    const autoPagin = setInterval(() => {
-      setCurrentPage((prev) => (prev + 1) % totalPages);
-    }, 10000);
+    handleResize(); 
 
-    handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [data.length, calculatedItemPerPage]);
 
-  const totalPages = Math.ceil(data.length / itemPerPage);
+  const totalPages = Math.ceil(data.length / calculatedItemPerPage);
   const currentItems = data.slice(
-    currentPage * itemPerPage,
-    currentPage * itemPerPage + itemPerPage
+    currentPage * calculatedItemPerPage,
+    currentPage * calculatedItemPerPage + calculatedItemPerPage
   );
 
   return (
     <div>
       <div
         className={twMerge(
-          `px-2 lg:px-12 py-2 flex gap-3 md:gap-5 lg:gap-8 md:mt-5 lg:mt-16 lg:overflow-hidden overflow-x-auto scrollbar-hide `,
+          `px-2 lg:px-12 py-6 flex  gap-3 md:gap-5 lg:gap-8 md:mt-5 lg:mt-16 lg:overflow-hidden overflow-x-auto scrollbar-hide`,
           className
         )}
       >
@@ -67,9 +61,7 @@ export default function ItemSection({
               isNew={isNew}
               discount_price={item.discount_price}
               discount={item.percent_discount}
-              className={
-                largeId ? "w-[272px] md:w-[420px] lg:w-[530px] col-span-2" : ""
-              }
+              className={largeId ? "w-[272px] md:w-[420px] lg:w-[250px] col-span-2 lg:col-span-1" : ""}
               key={index}
             />
           );

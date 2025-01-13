@@ -13,13 +13,13 @@ export default function AdvertismentBanner({
   buttonText?: string;
   bgColor?:string
 } & HTMLAttributes<HTMLDivElement>) {
-  //const {children, ...otherProps} = props
+
   return (
     <div
-      className={twMerge("relative mt-10 w-full max-w-[375px] md:max-w-[768px] lg:max-w-full mx-auto h-[100px] md:h-[200px] md:flex md:items-center md:justify-between md:bg-black",bgColor)}
+      className={twMerge("relative mt-10 w-full max-w-[375px] md:max-w-[768px] lg:max-w-full mx-auto h-[100px] md:h-[200px] xl:h-[300px] md:flex md:items-center md:justify-between md:bg-black",bgColor)}
       {...props}
     >
-      <div className="absolute inset-0 md:inset-auto md:relative flex flex-col items-center justify-center md:ml-12">
+      <div className="absolute inset-0 md:inset-auto md:relative flex flex-col items-center justify-center md:ml-12 xl:ml-32">
         <p className="w-48 md:w-64 lg:w-96 text-center text-white text text-shadow-xl uppercase text-base md:text-2xl lg:text-4xl font-bold">
           {title}
         </p>

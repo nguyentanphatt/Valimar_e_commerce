@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from "next/image";
-import logo from '@/public/assets/image/logo_1.png'
 import SearchBar from '../ui/SearchBar';
+import { logo } from '@/constant/image';
 const Header = () => {
   return (
    <div className='py-2'>
