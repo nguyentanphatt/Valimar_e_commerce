@@ -9,6 +9,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import React, { useState } from "react";
+import { subcategories } from "@/constant/data";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -20,14 +21,6 @@ const Navbar = () => {
     { text: "Subscription", href: "/subscription" },
   ];
 
-  const subcategories = [
-    { name: "Action", href: "/category/action" },
-    { name: "Horror", href: "/category/horror" },
-    { name: "Adventure", href: "/category/adventure" },
-    { name: "Sci-Fi", href: "/category/sci-fi" },
-  ];
-
-  
 
   const handleDropdownToggle = () => {
     setIsCategoryActive(!isCategoryActive);
@@ -65,28 +58,55 @@ const Navbar = () => {
                 <DropdownMenu
                   aria-label="Categories"
                   variant="flat"
-                  className="bg-black text-white font-medium rounded-br-lg rounded-bl-xl transition shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
+                  className="bg-black text-white font-medium rounded-br-lg rounded-bl-xl transition shadow-[0_0_10px_5px_rgba(0,208,255,0.2)]"
                   onAction={() => setIsCategoryActive(false)}
                 >
-                  {subcategories.map((sub, subIndex) => (
-                    <DropdownItem key={subIndex}>
-                      <Link href={sub.href}>
-                        <span className="group-hover:text-darkblue">
-                          {sub.name}
-
-                          <span
-                            className={`absolute left-0 md:bottom-1 w-0 h-0.5 bg-darkblue transition-all duration-300 group-hover:w-[50%]`}
-                          ></span>
-                        </span>
-                      </Link>
-                    </DropdownItem>
-                  ))}
+                  <DropdownItem key="grid-menu" className="pl-6 pr-5">
+                    <div className="grid grid-cols-3 md:w-[350px] lg:w-[430px] gap-5">
+                      <div className="flex flex-col items-center ">
+                        <h3 className="font-bold text-base md:text-lg text-darkblue mb-1">Discovery</h3>
+                        {subcategories.slice(0, 3).map((sub, index) => (
+                          <p key={index} className="mb-2">
+                            <Link href={sub.href}>
+                              <span className="text-sm md:text-base hover:text-darkblue transition-all duration-200">
+                                {sub.name}
+                              </span>
+                            </Link>
+                          </p>
+                        ))}
+                      </div>
+                      <div className="flex flex-col items-center justify-center">
+                        <h3 className="font-bold text-base md:text-lg text-darkblue mb-1">Gerne</h3>
+                        {subcategories.slice(3, 10).map((sub, index) => (
+                          <p key={index} className="mb-2">
+                            <Link href={sub.href}>
+                              <span className="text-sm md:text-base hover:text-darkblue transition-all duration-200">
+                                {sub.name}
+                              </span>
+                            </Link>
+                          </p>
+                        ))}
+                      </div>
+                      <div className="flex flex-col items-center justify-center">
+                        <div className="h-7 mb-1.5"></div>
+                        {subcategories.slice(10, 17).map((sub, index) => (
+                          <p key={index} className="mb-2">
+                            <Link href={sub.href}>
+                              <span className="text-sm md:text-base hover:text-darkblue transition-all duration-200">
+                                {sub.name}
+                              </span>
+                            </Link>
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             ) : (
               <Link href={item.href}>
                 <span
-                  className={`relative group-hover:text-darkblue ${
+                  className={`relative group-hover:text-darkblue  ${
                     pathname === item.href ? "text-darkblue" : ""
                   }`}
                 >

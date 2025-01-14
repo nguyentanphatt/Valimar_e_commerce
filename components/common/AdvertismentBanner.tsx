@@ -26,7 +26,7 @@ export default function AdvertismentBanner({
         <Button
           size="md"
           text={buttonText}
-          className="bg-white text-xs md:text-xl lg:text-2xl mt-2 md:mt-6 md:w-44 md:h-10 "
+          className="bg-white text-xs md:text-xl lg:text-2xl mt-2 md:mt-6 md:w-44 md:h-10 hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)] "
         />
       </div>
       {children}
