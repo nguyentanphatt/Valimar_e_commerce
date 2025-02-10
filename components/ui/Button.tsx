@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 const classes = cva("bg-darkblue flex items-center justify-center rounded-2xl", {
   variants: {
     size: {
-      sm: "w-16 h-5 text-sm",
+      sm: "w-16 h-5 text-xs",
       md: "w-24 h-8 text-base",
       lg: "w-28 h-10 text-xl"
     },

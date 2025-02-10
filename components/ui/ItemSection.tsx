@@ -9,7 +9,6 @@ export default function ItemSection({
   itemPerPage = 5,
   className,
   largeItemId,
-  isNew = false,
 }: ItemSectionProps) {
   const [lgScreen, setLgScreen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -55,12 +54,12 @@ export default function ItemSection({
           const largeId = largeItemId?.includes(item.id);
           return (
             <ItemCard
-              image={item.image}
+              id={item.id}
+              imageUrl={item.imageUrl}
               name={item.name}
               price={item.price}
-              isNew={isNew}
-              discount_price={item.discount_price}
-              discount={item.percent_discount}
+              discountPrice={item.discountPrice}
+              discountPercent={item.discountPercent}
               className={largeId ? "w-[272px] md:w-[420px] lg:w-[250px] col-span-2 lg:col-span-1" : ""}
               key={index}
             />

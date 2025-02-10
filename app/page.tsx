@@ -9,9 +9,15 @@ import Button from "@/components/ui/Button";
 import AdvertismentBanner from "@/components/common/AdvertismentBanner";
 import Label from "@/components/ui/Label";
 import ItemSection from "@/components/ui/ItemSection";
-import { hollow_banner, per3_banner, per3_header, per5_header } from "@/constant/image";
+import {
+  hollow_banner,
+  per3_banner,
+  per3_header,
+  per5_header,
+} from "@/constant/image";
 import { new_releases, special_deal } from "@/constant/data";
-
+import { fetchGames } from "@/services/gameService";
+import { GameProps } from "@/constant/type";
 
 export default function Home() {
   const [leftImage, leftAnimate] = useAnimate();
@@ -28,7 +34,31 @@ export default function Home() {
     ]);
   }, []);
 
+  const [data, setData] = useState([]);
+  const [special, setSpecial] = useState([]);
+  const [newRelease, setNewRelease] = useState([]);
+  useEffect(() => {
+    const loadGames = async () => {
+      try {
+        const data = await fetchGames();
+        console.log(data);
+        setData(data);
 
+        const special = data.filter((game:GameProps) => game.discountPercent > 50).slice(0, 12);
+        setSpecial(special);
+
+        const newRelease = data
+          .filter((game: GameProps) => new Date(game.releaseDate) > new Date("2024-05-01"))
+          .slice(0, 13);
+        setNewRelease(newRelease);
+      } catch (error) {
+        console.error("Failed to load games");
+      }
+    };
+    loadGames();
+  }, []);
+
+  console.log(newRelease);
 
   return (
     <div>
@@ -42,7 +72,7 @@ export default function Home() {
           <Button
             size="md"
             text="Search"
-            className="lg:w-28 lg:h-10 lg:text-lg"
+            className="lg:w-28 lg:h-10 lg:text-lg hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
           />
         </div>
         <Label title="Best for you" className="hidden md:flex" />
@@ -70,7 +100,10 @@ export default function Home() {
         />
       </AdvertismentBanner>
       <Label title="Special Deals" starSize="hidden md:flex" />
-      <ItemSection data={special_deal} isNew />
+      <div className="lg:flex lg:items-center lg:justify-center">
+        <ItemSection data={special} isNew />
+      </div>
+
       <AdvertismentBanner
         title="Persona 3 reload get it today"
         bgColor="md:bg-banner"
@@ -82,11 +115,13 @@ export default function Home() {
         />
       </AdvertismentBanner>
       <Label title="New release" starSize="hidden md:flex" />
-      <ItemSection
-        data={new_releases}
-        largeItemId={[2, 4, 7, 8]}
-        className="grid grid-cols-8 lg:grid-cols-4 lg:flex gap-x-36 md:gap-x-56 xl:gap-x-8 gap-y-4"
-      />
+      <div className="lg:flex lg:items-center lg:justify-center">
+        <ItemSection
+          data={newRelease}
+          largeItemId={[46, 4, 117]}
+          className="grid grid-cols-8 lg:grid-cols-4 lg:flex gap-x-36 md:gap-x-56 xl:gap-x-8 gap-y-4"
+        />
+      </div>
     </div>
   );
 }

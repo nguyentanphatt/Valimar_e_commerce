@@ -1,12 +1,12 @@
 import { StaticImageData } from "next/image";
 
 export interface ItemCardProps {
-  image: StaticImageData;
+  id: number;
+  imageUrl: string | StaticImageData;
   name: string;
-  isNew?: boolean;
   price: number;
-  discount_price?: number;
-  discount: number;
+  discountPrice?: number;
+  discountPercent: number;
   className?: string;
 }
 
@@ -16,11 +16,11 @@ export interface ItemProps {
     price: number;
     discount_price: number;
     percent_discount: number;
-    image: StaticImageData;
+    image: string | StaticImageData;
   }
 
 export interface ItemSectionProps {
-    data: ItemProps[];
+  data: ItemCardProps[];
   itemPerPage?: number;
   className?: string;
   largeItemId?: number[];
@@ -34,4 +34,19 @@ export interface SubscriptionCardProps {
     buttonText: string;
     recommend?: boolean;
     buttonClassName?: string;
+  }
+
+  export interface GameProps{
+    developer: string;
+  discountPercent: number;
+  discountPrice: number;
+  gameId: string;
+  genre: string;
+  id: number;
+  imageUrl: string;
+  link: string;
+  name: string;
+  physical: boolean;
+  price: number;
+  releaseDate: string;
   }

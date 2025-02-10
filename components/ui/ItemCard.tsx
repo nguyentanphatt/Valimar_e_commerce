@@ -4,14 +4,14 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 export default function ItemCard({
-  image,
+  id,
+  imageUrl,
   name,
-  isNew = false,
   price,
-  discount_price,
-  discount,
+  discountPrice,
+  discountPercent,
   className,
-} : ItemCardProps) {
+}: ItemCardProps) {
   return (
     <div
       className={twMerge(
@@ -19,33 +19,33 @@ export default function ItemCard({
         className
       )}
     >
-      <Image
-        src={image}
-        alt={name}
-        className="w-full h-[70%] object-cover rounded"
-      />
+      <div className="relative w-full h-[70%]">
+        <Image
+          src={imageUrl}
+          alt={name}
+          layout="fill"
+          objectFit="cover"
+          className="rounded"
+          priority
+        />
+      </div>
       <div className="flex px-1 md:px-2 lg:px-3 h-[30px] md:h-[40px] lg:h-[60px] gap-2">
-        <p className="font-medium text-xs md:text-base lg:text-xl text-white">
+        <p className="font-medium text-xs md:text-base lg:text-xl text-white pt-1 lg:pt-2">
           {name}
         </p>
-        {isNew && (
-          <p className="-translate-y-0.5 uppercase text-[10px] md:text-[14px] lg:text-xl text-darkblue">
-            new
-          </p>
-        )}
       </div>
-      <div className="flex pb-2 px-1 gap-1 md:px-2 lg:px-3">
+      <div className="flex pb-2 px-1 pt-2 gap-1 md:px-2 lg:px-3">
         <p className="font-medium text-xs md:text-base lg:text-2xl text-darkblue">
-          ${discount !== 0 ? discount_price : price}
+          ${discountPercent !== 0 ? discountPrice : price}
         </p>
-        {discount !== 0 && (
+        {discountPercent !== 0 && (
           <>
             <p className="-translate-y-1 uppercase text-[10px] md:text-[14px] lg:text-xl line-through text-white/50">
               ${price}
             </p>
-            <div className="w-9 md:w-14 h-3 md:h-5 bg-darkblue flex items-center justify-center translate-y-0.5 lg:translate-y-1.5">
+            <div className="w-9 md:w-14 h-3 md:h-5 bg-darkblue flex items-center justify-center translate-y-0.5 lg:translate-y-1.5 rounded-sm">
               <p className="text-[10px] md:text-[14px] lg:text-xl">
-                {discount}%
+                {discountPercent}%
               </p>
             </div>
           </>

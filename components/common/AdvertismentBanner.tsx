@@ -20,7 +20,7 @@ export default function AdvertismentBanner({
       {...props}
     >
       <div className="absolute inset-0 md:inset-auto md:relative flex flex-col items-center justify-center md:ml-12 xl:ml-32">
-        <p className="w-48 md:w-64 lg:w-96 text-center text-white text text-shadow-xl uppercase text-base md:text-2xl lg:text-4xl font-bold">
+        <p className="w-48 md:w-64 lg:w-96 text-center text-white text text-shadow-xl uppercase text-base md:text-2xl lg:text-3xl font-bold">
           {title}
         </p>
         <Button
