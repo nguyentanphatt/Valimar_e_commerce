@@ -11,13 +11,13 @@ export interface ItemCardProps {
 }
 
 export interface ItemProps {
-    id: number;
-    name: string;
-    price: number;
-    discount_price: number;
-    percent_discount: number;
-    image: string | StaticImageData;
-  }
+  id: number;
+  name: string;
+  price: number;
+  discount_price: number;
+  percent_discount: number;
+  image: string | StaticImageData;
+}
 
 export interface ItemSectionProps {
   data: ItemCardProps[];
@@ -28,16 +28,16 @@ export interface ItemSectionProps {
 }
 
 export interface SubscriptionCardProps {
-    title: string;
-    price: string;
-    features: string[];
-    buttonText: string;
-    recommend?: boolean;
-    buttonClassName?: string;
-  }
+  title: string;
+  price: string;
+  features: string[];
+  buttonText: string;
+  recommend?: boolean;
+  buttonClassName?: string;
+}
 
-  export interface GameProps{
-    developer: string;
+export interface GameProps {
+  developer: string;
   discountPercent: number;
   discountPrice: number;
   gameId: string;
@@ -49,4 +49,19 @@ export interface SubscriptionCardProps {
   physical: boolean;
   price: number;
   releaseDate: string;
-  }
+}
+
+export interface ItemGridSectionProps{
+  data: ItemCardProps[];
+}
+
+export interface FilterProps{
+  name:string;
+  value:string;
+}
+
+export interface FilterMenuProps{
+  title: string;
+  content: FilterProps[];
+  className?: string;
+}

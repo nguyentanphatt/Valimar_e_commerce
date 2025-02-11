@@ -46,7 +46,7 @@ export default function ItemSection({
     <div>
       <div
         className={twMerge(
-          `px-2 lg:px-12 py-6 flex  gap-3 md:gap-5 lg:gap-8 md:mt-5 lg:mt-16 lg:overflow-hidden overflow-x-auto scrollbar-hide`,
+          `px-2 lg:px-12 pb-4 flex gap-3 md:gap-5 lg:gap-8 lg:overflow-hidden overflow-x-auto scrollbar-hide`,
           className
         )}
       >

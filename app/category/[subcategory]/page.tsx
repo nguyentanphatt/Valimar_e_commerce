@@ -1,27 +1,53 @@
 "use client";
 import Label from "@/components/ui/Label";
-import { games, subcategories } from "@/constant/data";
+import {
+  filterMenu01,
+  filterMenu02,
+  games,
+  subcategories,
+} from "@/constant/data";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimationPlaybackControls, motion, useAnimate } from "framer-motion";
-import { Accordion, AccordionItem, Tooltip } from "@nextui-org/react";
+import {
+  Accordion,
+  AccordionItem,
+  Checkbox,
+  CheckboxGroup,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Tooltip,
+  useDisclosure,
+} from "@nextui-org/react";
 import ItemCard from "@/components/ui/ItemCard";
 import Button from "@/components/ui/Button";
+import { fetchGames } from "@/services/gameService";
+import { GameProps } from "@/constant/type";
+import GameCard from "@/components/ui/GameCard";
+import { Menu } from "@/constant/image";
+import FilterMenu from "@/components/ui/FilterMenu";
+import Link from "next/link";
 
 const page = () => {
-  const { subcategory } = useParams();
-  const category = subcategories.find(
-    (category) => category.href === `/category/${subcategory}`
-  );
-
-  const gameBySubcategory = games.filter(
-    (item) => item.genre.toLowerCase() === subcategory
-  );
-
   const [isHover, setIsHover] = useState(false);
   const animation = useRef<AnimationPlaybackControls | null>(null);
   const [scope, animate] = useAnimate();
+  const [data, setData] = useState([]);
+  const [visibleItems, setVisibleItems] = useState(10);
+  const [showMenu, setShowMenu] = useState(false);
+  const [filter, setFilter] = useState<string[]>([]);
+  const { subcategory } = useParams();
+
+  const category = subcategories.find(
+    (category) => category.href === `/category/${subcategory}`
+  );
 
   useEffect(() => {
     animation.current = animate(
@@ -45,7 +71,71 @@ const page = () => {
       }
     }
   }, [isHover]);
-  
+
+  useEffect(() => {
+    const loadGames = async () => {
+      try {
+        const data = await fetchGames();
+        setData(data);
+      } catch (error) {
+        console.error("Failed to load games");
+      }
+    };
+    loadGames();
+  }, []);
+  const categoryFind = Array.isArray(subcategory)
+    ? subcategory[0]
+    : subcategory || "";
+  const gameByCategory = data.filter((game: GameProps) =>
+    game.genre.toLowerCase().includes(categoryFind)
+  );
+
+  const feature = gameByCategory
+    .filter(
+      (game: GameProps) => new Date(game.releaseDate) > new Date("2023-01-01")
+    )
+    .slice(0, 8);
+
+  const handleSeeMore = () => {
+    setVisibleItems((prev) => prev + 10);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowMenu(true);
+      } else {
+        setShowMenu(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleFilter = (values: string[]) => {
+    setFilter(values);
+  };
+
+  const filterGames = gameByCategory.filter((game: GameProps) => {
+    if (filter.includes("newrelease")) {
+      return filter.some(
+        (filter) => new Date(game.releaseDate) > new Date("2024-01-01")
+      );
+    }
+    if (filter.includes("discount")) {
+      return filter.some((filter) => game.discountPercent > 0);
+    }
+    if (filter.length > 0) {
+      return filter.some((filter) =>
+        game.genre.toLowerCase().includes(filter.toLowerCase())
+      );
+    }
+    return true;
+  });
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div className="py-5 md:py-14 lg:py-20">
       <div className="flex flex-col items-center">
@@ -71,14 +161,14 @@ const page = () => {
         >
           {Array.from({ length: 2 }).map((_, index) => (
             <React.Fragment key={index}>
-              {gameBySubcategory.slice(0, 5).map((game) => (
+              {feature.map((game: GameProps) => (
                 <Tooltip
-                  key={game.name}
+                  key={game.id}
                   placement="right"
                   content={
                     <div className="p-5 bg-black rounded-lg flex flex-col gap-1 md:gap-5 shadow-[0_0_10px_5px_rgba(0,208,255,0.2)]">
                       <Image
-                        src={game.image_url}
+                        src={game.imageUrl}
                         alt="Per"
                         width={300}
                         height={100}
@@ -87,25 +177,34 @@ const page = () => {
                         {game.name}
                       </h1>
                       <p className="text-white/50 text-xs md:text-base">
-                        Release Date: {game.release_date}
+                        Release Date: {game.releaseDate}
                       </p>
                       <p className="text-white/50 text-xs md:text-base">
-                        Gerne: {subcategory}
+                        Gerne: {game.genre}
                       </p>
-                      <p className="text-sm md:text-xl text-white">
-                        Price{" "}
-                        <span className="text-darkblue">{game.price}</span>
-                      </p>
-                      <Button
-                        size="sm"
-                        text="See more"
-                        className="md:w-24 md:h-8 md:text-base hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
-                      />
+                      <div className="flex justify-between">
+                        <p className="text-sm md:text-xl text-white">
+                          Price{" "}
+                          <span className="text-darkblue">{game.price}</span>
+                        </p>
+                        <Link href={`/game/${game.id}`} passHref>
+                          <Button
+                            size="sm"
+                            text="See more"
+                            className="md:w-24 md:h-8 md:text-base hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
+                          />
+                        </Link>
+                      </div>
                     </div>
                   }
                 >
                   <div className="w-[150px] h-[100px] md:w-[300px] md:h-[200px] skew-y-12 hover:skew-y-0 transition duration-200 bg-white">
-                    <Image src={game.image_url} alt="Per" fill />
+                    <Image
+                      src={game.imageUrl}
+                      alt="Header Image"
+                      fill
+                      sizes="(max-width: 768px) 150px, 300px"
+                    />
                   </div>
                 </Tooltip>
               ))}
@@ -117,28 +216,77 @@ const page = () => {
         title="Game List"
         className="justify-center md:justify-start px-10 text-3xl"
       />
-      <div className="grid grid-cols-6 gap-4">
-        <div className="">
-          <Accordion variant="splitted" selectionMode="multiple" itemClasses={{}}>
-            <AccordionItem
-              key="1"
-              aria-label="Your Choice"
-              title="Your Choice"
-              className="bg-white"
-            >
-              aa
-            </AccordionItem>
-            <AccordionItem key="2" aria-label="Tags" title="Tags" className="bg-white">
-              bb
-            </AccordionItem>
-            <AccordionItem key="3" aria-label="Genre" title="Genre" className="bg-white">
-              bb
-            </AccordionItem>
-          </Accordion>
+      <div className="flex flex-col relative md:grid md:grid-cols-7 lg:grid-cols-6 md:gap-5 md:px-2 lg:px-5">
+        <div
+          className={`fixed top-4 right-2 bg-darkblue/50 rounded-full size-8 flex md:hidden items-center justify-center backdrop-blur-sm shadow-lg transition-opacity duration-300 ${
+            showMenu ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          onClick={onOpen}
+        >
+          <Menu className="text-white" />
         </div>
-        <div className="col-span-4 text-white">aaaaa</div>
+        <Drawer isOpen={isOpen} onClose={onOpenChange} placement="bottom">
+          <DrawerContent className="bg-black">
+            <DrawerHeader className="text-white">Filter</DrawerHeader>
+            <DrawerBody>
+              <div className="flex flex-col gap-5">
+                <FilterMenu
+                  content={filterMenu01}
+                  title="Your Choice"
+                  onChange={handleFilter}
+                />
+                <FilterMenu
+                  content={filterMenu02}
+                  title="Genre"
+                  onChange={handleFilter}
+                  className="h-[300px] overflow-y-auto pb-5"
+                />
+              </div>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+        <div className="hidden md:flex md:flex-col md:col-span-2 lg:col-span-1 md:gap-5 py-2 ">
+          <FilterMenu
+            content={filterMenu01}
+            title="Your Choice"
+            onChange={handleFilter}
+          />
+          <FilterMenu
+            content={filterMenu02}
+            title="Genre"
+            onChange={handleFilter}
+          />
+        </div>
+        <div className=" pb-6 md:col-span-5 ">
+          {filterGames.slice(0, visibleItems).map((item: GameProps) => (
+            <GameCard
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              price={item.price}
+              discountPercent={item.discountPercent}
+              discountPrice={item.discountPrice}
+              imageUrl={item.imageUrl}
+              developer={item.developer}
+              gameId={item.gameId}
+              genre={item.genre}
+              link={item.link}
+              physical={item.physical}
+              releaseDate={item.releaseDate}
+            />
+          ))}
+          <div className="flex items-center justify-center">
+            {visibleItems < gameByCategory.length && (
+              <Button
+                size="sm"
+                text="See more"
+                className="md:w-20 md:h-6 lg:w-28 lg:h-8 lg:text-base hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
+                onClick={handleSeeMore}
+              />
+            )}
+          </div>
+        </div>
       </div>
-     
     </div>
   );
 };

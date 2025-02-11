@@ -478,5 +478,75 @@ export const games = [
   },
 ];
 
+export const filterMenu01 = [
+  {
+    name: "New Release",
+    value: "newrelease",
+  },
+  {
+    name: "Discount",
+    value: "discount",
+  }
+]
+
+export const filterMenu02 = [
+  {
+    name:"Action",
+    value: "action",
+  },
+  {
+    name:"Horror",
+    value: "horror",
+  },
+  {
+    name:"Adventure",
+    value: "adventure",
+  },
+  {
+    name:"JRPG",
+    value: "jrpg",
+  },
+  {
+    name:"Music",
+    value: "music",
+  },
+  {
+    name:"Puzzle",
+    value: "puzzle",
+  },
+  {
+    name:"Space",
+    value: "space",
+  },
+  {
+    name:"Simulation",
+    value: "simulation",
+  },
+  {
+    name:"Dating",
+    value: "dating",
+  },
+  {
+    name:"Fighting",
+    value: "fighting",
+  },
+  {
+    name:"Racing",
+    value: "racing",
+  },
+  {
+    name:"Strategy",
+    value: "strategy",
+  },
+  {
+    name:"Turn-Base",
+    value: "turn-base",
+  },
+  {
+    name:"Building",
+    value: "building",
+  }
+]
+
 
 

@@ -33,6 +33,7 @@ import hollow_banner from "@/public/assets/image/hollow.jpg";
 import Arrowright from '@/public/assets/icon/arrow-up-right.svg'
 import logo from '@/public/assets/image/logo_1.png'
 import Star from "@/public/assets/icon/star.svg"
+import Menu from '@/public/assets/icon/menu.svg'
 
 export {
     acval,
@@ -65,5 +66,6 @@ export {
     hollow_banner,
     Arrowright,
     logo,
-    Star
+    Star,
+    Menu
 }

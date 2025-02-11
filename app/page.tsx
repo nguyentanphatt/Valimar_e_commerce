@@ -15,11 +15,15 @@ import {
   per3_header,
   per5_header,
 } from "@/constant/image";
-import { new_releases, special_deal } from "@/constant/data";
+import { games, new_releases, special_deal } from "@/constant/data";
 import { fetchGames } from "@/services/gameService";
 import { GameProps } from "@/constant/type";
+import ItemGridSection from "@/components/ui/ItemGridSection";
 
 export default function Home() {
+  const [data, setData] = useState([]);
+  const [special, setSpecial] = useState([]);
+  const [newRelease, setNewRelease] = useState([]);
   const [leftImage, leftAnimate] = useAnimate();
   const [rightImage, rightAnimate] = useAnimate();
 
@@ -34,14 +38,10 @@ export default function Home() {
     ]);
   }, []);
 
-  const [data, setData] = useState([]);
-  const [special, setSpecial] = useState([]);
-  const [newRelease, setNewRelease] = useState([]);
   useEffect(() => {
     const loadGames = async () => {
       try {
         const data = await fetchGames();
-        console.log(data);
         setData(data);
 
         const special = data.filter((game:GameProps) => game.discountPercent > 50).slice(0, 12);
@@ -49,7 +49,7 @@ export default function Home() {
 
         const newRelease = data
           .filter((game: GameProps) => new Date(game.releaseDate) > new Date("2024-05-01"))
-          .slice(0, 13);
+          .slice(0, 12);
         setNewRelease(newRelease);
       } catch (error) {
         console.error("Failed to load games");
@@ -57,8 +57,6 @@ export default function Home() {
     };
     loadGames();
   }, []);
-
-  console.log(newRelease);
 
   return (
     <div>
@@ -121,6 +119,10 @@ export default function Home() {
           largeItemId={[46, 4, 117]}
           className="grid grid-cols-8 lg:grid-cols-4 lg:flex gap-x-36 md:gap-x-56 xl:gap-x-8 gap-y-4"
         />
+      </div>
+      <Label title="All Games" starSize="hidden md:flex"/>
+      <div className="flex items-center justify-center">
+        <ItemGridSection data={data}/>
       </div>
     </div>
   );
