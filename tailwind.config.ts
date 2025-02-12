@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 const {nextui} = require("@nextui-org/react");
+import scrollBarHide from 'tailwind-scrollbar-hide';
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -28,5 +29,6 @@ export default {
   plugins: [
     [nextui()],
     require('tailwindcss-textshadow'),
+    scrollBarHide,
   ],
 } satisfies Config;

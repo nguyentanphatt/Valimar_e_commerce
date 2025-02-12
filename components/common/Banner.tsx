@@ -126,7 +126,7 @@ const Banner = () => {
                 {item.name}{" "}
                 <span className="text-darkblue text-xl lg:text-3xl font-bold">NEW</span>
               </p>
-              <Button size="md" text="View More" className="lg:w-28 lg:h-10 lg:text-lg" />
+              <Button size="md" text="View More" className="md:text-sm lg:w-28 md:h-7 lg:h-10 lg:text-lg" />
             </div>
           )}
         </motion.div>

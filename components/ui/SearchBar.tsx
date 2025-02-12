@@ -1,18 +1,95 @@
+"use client";
 import { twMerge } from "tailwind-merge";
+import Button from "./Button";
+import { useEffect, useState } from "react";
+import { searchGames } from "@/services/gameService";
+import {
+  Card,
+  CardBody,
+  Divider,
+  Table,
+  TableBody,
+  TableRow,
+} from "@nextui-org/react";
+import { GameProps } from "@/constant/type";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function SearchBar({ className }: { className?: string }) {
+  const [search, setSearch] = useState("");
+  const [result, setResult] = useState([]);
+
+  useEffect(() => {
+    if (search.length < 1) {
+      setResult([]);
+      return;
+    }
+    const fetchGames = async (search: string) => {
+      try {
+        const response = await searchGames(search);
+        setResult(response);
+      } catch (error) {
+        console.error("Error searching games:", error);
+        setResult([]);
+      }
+    };
+    const debounce = setTimeout(() => fetchGames(search), 500);
+    return () => clearTimeout(debounce);
+  }, [search]);
+
   return (
-    <div
-      className={twMerge(
-        "border-2 border-white hover:border-darkblue rounded-full bg-dark",
-        className
+    <div className="relative">
+      <div className="md:flex flex-row md:gap-2">
+        <div
+          className={twMerge(
+            "border-2 border-white hover:border-darkblue rounded-full bg-dark",
+            className
+          )}
+        >
+          <input
+            type="text"
+            className="bg-dark w-full md:w-[430px] lg:w-[700px] lg:h-10 rounded-full outline-none text-white px-5"
+            placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        {search.length > 0 ? (
+          <Link href={`/search?query=${encodeURIComponent(search)}`} passHref>
+            <Button
+              size="sm"
+              text="Search"
+              className="hidden md:flex md:h-7 lg:h-10 lg:w-20 lg:text-base hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
+            />
+          </Link>
+        ) : (
+          <Button
+            size="sm"
+            text="Search"
+            className="hidden md:flex md:h-7 lg:h-10 lg:w-20 lg:text-base opacity-50 cursor-not-allowed"
+            disabled
+          />
+        )}
+      </div>
+      {result.length > 0 && (
+        <div className="absolute h-auto max-h-[300px] md:max-h-[400px] lg:max-h-[500px] w-full overflow-y-auto scrollbar-hide p-2 md:mt-2 bg-gray-700 z-40 rounded-lg transition ease-in-out">
+          {result.map((game: GameProps) => (
+            <Link href={`/game/${game.id}`} key={game.id}>
+              <div className="flex flex-col ">
+                <div className="flex items-center gap-2 py-3 hover:bg-white/20">
+                  <Image
+                    src={game.imageUrl}
+                    width={100}
+                    height={100}
+                    alt="Game Search"
+                  /> 
+                  <h1 className="text-white lg:text-base">{game.name}</h1>
+                </div>
+                {result.length > 1 && <span className="w-full border border-darkblue bg-darkblue"></span>}
+              </div>
+            </Link>
+          ))}
+        </div>
       )}
-    >
-      <input
-        type="text"
-        className="bg-dark w-full rounded-full outline-none text-white px-5"
-        placeholder="Search..."
-      />
     </div>
   );
 }

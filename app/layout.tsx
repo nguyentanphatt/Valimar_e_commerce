@@ -33,7 +33,7 @@ export default function RootLayout({
         <div className="md:flex md:items-center md:justify-center md:gap-14 lg:gap-24 md:py-5">
           <Header />
           <Navbar />
-          <Account className="sm:hidden md:flex lg:size-10" />
+          <Account className="hidden md:flex lg:size-10" />
         </div>
         {children}
         <Footer />

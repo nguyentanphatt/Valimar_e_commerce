@@ -11,7 +11,9 @@ const Header = () => {
        </div>
         <h1 className='text-white font-bold text-xl md:text-2xl lg:text-4xl'>VALIMAR</h1>
     </div>
-    <SearchBar className='mx-12 mt-3 md:hidden'/>
+    <div className='flex md:hidden items-center justify-center py-2 z-40'>
+      <SearchBar className='w-[300px]'/>
+    </div>
    </div>
   )
 }

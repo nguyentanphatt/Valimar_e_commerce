@@ -15,7 +15,6 @@ import {
   per3_header,
   per5_header,
 } from "@/constant/image";
-import { games, new_releases, special_deal } from "@/constant/data";
 import { fetchGames } from "@/services/gameService";
 import { GameProps } from "@/constant/type";
 import ItemGridSection from "@/components/ui/ItemGridSection";
@@ -44,11 +43,16 @@ export default function Home() {
         const data = await fetchGames();
         setData(data);
 
-        const special = data.filter((game:GameProps) => game.discountPercent > 50).slice(0, 12);
+        const special = data
+          .filter((game: GameProps) => game.discountPercent > 50)
+          .slice(0, 12);
         setSpecial(special);
 
         const newRelease = data
-          .filter((game: GameProps) => new Date(game.releaseDate) > new Date("2024-05-01"))
+          .filter(
+            (game: GameProps) =>
+              new Date(game.releaseDate) > new Date("2024-05-01")
+          )
           .slice(0, 12);
         setNewRelease(newRelease);
       } catch (error) {
@@ -59,21 +63,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <div className="relative flex flex-col items-center gap-10 lg:py-10 md:overflow-x-hidden">
+    <div className="relative">
+      <div className="relative flex flex-col items-center gap-10 md:h-[200px] lg:h-[400px] lg:py-10 md:overflow-x-hidden">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
           <span className="text-darkblue">special discount</span>
         </p>
-        <div className="md:flex flex-row gap-2 w-full px-28 lg:px-36 hidden z-20">
-          <SearchBar className="hidden md:flex w-full md:w-[70%] xl:w-[50%] lg:ml-6 xl:ml-[20%] px-3 lg:py-1.5 md:backdrop-blur-lg" />
-          <Button
-            size="md"
-            text="Search"
-            className="lg:w-28 lg:h-10 lg:text-lg hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"
-          />
-        </div>
-        <Label title="Best for you" className="hidden md:flex" />
         <motion.div
           className="absolute hidden md:flex md:w-[300px] md:h-[150px] lg:w-[500px] lg:h-[300px] md:-left-1 lg:-left-20 md:top-14 lg:top-5 opacity-50 z-10"
           ref={leftImage}
@@ -89,6 +84,10 @@ export default function Home() {
           <Image src={per3_header} fill alt="per3" />
         </motion.div>
       </div>
+      <div className="absolute top-32 left-36 lg:top-[5%] lg:left-[25%] z-40 flex items-center justify-center md:w-[500px] lg:w-[50%]">
+        <SearchBar className="hidden md:flex" />
+      </div>
+      <Label title="Best for you" className="hidden md:flex" />
       <Banner />
       <AdvertismentBanner title="Special offer up to 50%">
         <Image
@@ -120,9 +119,9 @@ export default function Home() {
           className="grid grid-cols-8 lg:grid-cols-4 lg:flex gap-x-36 md:gap-x-56 xl:gap-x-8 gap-y-4"
         />
       </div>
-      <Label title="All Games" starSize="hidden md:flex"/>
+      <Label title="All Games" starSize="hidden md:flex" />
       <div className="flex items-center justify-center">
-        <ItemGridSection data={data}/>
+        <ItemGridSection data={data} />
       </div>
     </div>
   );
