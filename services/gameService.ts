@@ -11,11 +11,21 @@ export const fetchGames = async () => {
 };
 
 export const searchGames = async (search: string) => {
-  try{
+  try {
     const response = await api.get(`/games/${search}`);
     return response.data;
   } catch (error) {
     console.error("Error searching games:", error);
     throw error;
   }
-}
+};
+
+export const getGameById = async (id: number) => {
+  try {
+    const response = await api.get(`/games/gamedetails/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching game by id:", error);
+    throw error;
+  }
+};

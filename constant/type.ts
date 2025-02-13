@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { ReactNode } from "react";
 
 export interface ItemCardProps {
   id: number;
@@ -49,6 +50,27 @@ export interface GameProps {
   physical: boolean;
   price: number;
   releaseDate: string;
+  requirements: RequirementProps[];
+  screenshots: ScreenshotsProps[];
+}
+
+export interface RequirementProps {
+  id:number;
+  gameId: number;
+  type:string;
+  os?:string | null;
+  processor?:string | null;
+  memory?:string | null;
+  graphics?:string | null;
+  directX?:string | null;
+  network?:string | null;
+  storage?:string | null;
+}
+
+export interface ScreenshotsProps{
+  id:number;
+  gameId:number;
+  image:string
 }
 
 export interface ItemGridSectionProps{
@@ -64,4 +86,10 @@ export interface FilterMenuProps{
   title: string;
   content: FilterProps[];
   className?: string;
+}
+
+export interface GameInfoProps{
+  title: string;
+  children: ReactNode;
+  className?:string
 }

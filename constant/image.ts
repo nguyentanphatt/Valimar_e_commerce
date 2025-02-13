@@ -29,11 +29,15 @@ import per5_header from "@/public/assets/image/per5_header.jpg";
 import per3_header from "@/public/assets/image/per3_header.png";
 import per3_banner from "@/public/assets/image/per3.jpg";
 import hollow_banner from "@/public/assets/image/hollow.jpg";
+import userImage from "@/public/assets/image/userImage.png"
 
 import Arrowright from '@/public/assets/icon/arrow-up-right.svg'
 import logo from '@/public/assets/image/logo_1.png'
 import Star from "@/public/assets/icon/star.svg"
 import Menu from '@/public/assets/icon/menu.svg'
+import Heart from '@/public/assets/icon/heart.svg'
+import ChevronLeft from '@/public/assets/icon/chevron-left.svg'
+import ChevronRight from '@/public/assets/icon/chevron-right.svg'
 
 export {
     acval,
@@ -67,5 +71,9 @@ export {
     Arrowright,
     logo,
     Star,
-    Menu
+    Menu,
+    Heart,
+    userImage,
+    ChevronLeft,
+    ChevronRight
 }

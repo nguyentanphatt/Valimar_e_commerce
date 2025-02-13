@@ -98,7 +98,7 @@ export default function Home() {
       </AdvertismentBanner>
       <Label title="Special Deals" starSize="hidden md:flex" />
       <div className="lg:flex lg:items-center lg:justify-center">
-        <ItemSection data={special} isNew />
+        <ItemSection data={special} />
       </div>
 
       <AdvertismentBanner
@@ -115,8 +115,8 @@ export default function Home() {
       <div className="lg:flex lg:items-center lg:justify-center">
         <ItemSection
           data={newRelease}
-          largeItemId={[46, 4, 117]}
-          className="grid grid-cols-8 lg:grid-cols-4 lg:flex gap-x-36 md:gap-x-56 xl:gap-x-8 gap-y-4"
+          largeItemId={[]}
+          className="grid grid-cols-6 lg:grid-cols-4 lg:flex gap-x-36 md:gap-x-56 xl:gap-x-8 gap-y-4"
         />
       </div>
       <Label title="All Games" starSize="hidden md:flex" />

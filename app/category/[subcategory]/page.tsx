@@ -3,7 +3,6 @@ import Label from "@/components/ui/Label";
 import {
   filterMenu01,
   filterMenu02,
-  games,
   subcategories,
 } from "@/constant/data";
 import Image from "next/image";
@@ -11,22 +10,13 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimationPlaybackControls, motion, useAnimate } from "framer-motion";
 import {
-  Accordion,
-  AccordionItem,
-  Checkbox,
-  CheckboxGroup,
   Drawer,
   DrawerBody,
   DrawerContent,
   DrawerHeader,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
-import ItemCard from "@/components/ui/ItemCard";
 import Button from "@/components/ui/Button";
 import { fetchGames } from "@/services/gameService";
 import { GameProps } from "@/constant/type";
@@ -273,6 +263,8 @@ const page = () => {
               link={item.link}
               physical={item.physical}
               releaseDate={item.releaseDate}
+              requirements={item.requirements}
+              screenshots={item.screenshots}
             />
           ))}
           <div className="flex items-center justify-center">
