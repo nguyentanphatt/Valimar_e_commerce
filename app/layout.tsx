@@ -5,6 +5,7 @@ import Navbar from "@/components/common/Navbar";
 import Header from "@/components/layout/Header";
 import Account from "@/public/assets/icon/account.svg";
 import Footer from "@/components/layout/Footer";
+import Wrapper from "@/components/common/Wrapper";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,13 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-dark`}
       >
-        <div className="md:flex md:items-center md:justify-center md:gap-14 lg:gap-24 md:py-5">
-          <Header />
-          <Navbar />
-          <Account className="hidden md:flex lg:size-10" />
+        <div className="md:flex md:items-center md:justify-center md:gap-14 lg:gap-24">
+          <Wrapper children={<Header />} />
+          <Wrapper children={<Navbar />} />
+          <Wrapper children={<Account className="hidden md:flex lg:size-10" />}/>
         </div>
         {children}
-        <Footer />
+        <Wrapper children={<Footer />} />
       </body>
     </html>
   );

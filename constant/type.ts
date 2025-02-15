@@ -93,3 +93,8 @@ export interface GameInfoProps{
   children: ReactNode;
   className?:string
 }
+
+export interface UserLoginProps{
+  email: string;
+  password: string;
+}
