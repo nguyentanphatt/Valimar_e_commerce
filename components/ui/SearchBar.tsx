@@ -3,14 +3,6 @@ import { twMerge } from "tailwind-merge";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 import { searchGames } from "@/services/gameService";
-import {
-  Card,
-  CardBody,
-  Divider,
-  Table,
-  TableBody,
-  TableRow,
-} from "@nextui-org/react";
 import { GameProps } from "@/constant/type";
 import Image from "next/image";
 import Link from "next/link";

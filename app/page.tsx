@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion, useAnimate } from "framer-motion";
 import Banner from "@/components/common/Banner";
 import SearchBar from "@/components/ui/SearchBar";
-import Button from "@/components/ui/Button";
 
 import AdvertismentBanner from "@/components/common/AdvertismentBanner";
 import Label from "@/components/ui/Label";
@@ -35,7 +34,7 @@ export default function Home() {
       [rightImage.current, { opacity: 1 }, { duration: 0.5 }],
       [rightImage.current, { y: 0, x: 0 }, { duration: 0.5 }],
     ]);
-  }, []);
+  }, [leftAnimate, leftImage, rightAnimate, rightImage]);
 
   useEffect(() => {
     const loadGames = async () => {
@@ -56,7 +55,7 @@ export default function Home() {
           .slice(0, 12);
         setNewRelease(newRelease);
       } catch (error) {
-        console.error("Failed to load games");
+        console.error("Failed to load games", error);
       }
     };
     loadGames();

@@ -25,7 +25,7 @@ import { Menu } from "@/constant/image";
 import FilterMenu from "@/components/ui/FilterMenu";
 import Link from "next/link";
 
-const page = () => {
+export default function Page(){
   const [isHover, setIsHover] = useState(false);
   const animation = useRef<AnimationPlaybackControls | null>(null);
   const [scope, animate] = useAnimate();
@@ -68,7 +68,7 @@ const page = () => {
         const data = await fetchGames();
         setData(data);
       } catch (error) {
-        console.error("Failed to load games");
+        console.error("Failed to load games", error);
       }
     };
     loadGames();
@@ -110,11 +110,11 @@ const page = () => {
   const filterGames = gameByCategory.filter((game: GameProps) => {
     if (filter.includes("newrelease")) {
       return filter.some(
-        (filter) => new Date(game.releaseDate) > new Date("2024-01-01")
+        () => new Date(game.releaseDate) > new Date("2024-01-01")
       );
     }
     if (filter.includes("discount")) {
-      return filter.some((filter) => game.discountPercent > 0);
+      return filter.some(() => game.discountPercent > 0);
     }
     if (filter.length > 0) {
       return filter.some((filter) =>
@@ -283,4 +283,3 @@ const page = () => {
   );
 };
 
-export default page;

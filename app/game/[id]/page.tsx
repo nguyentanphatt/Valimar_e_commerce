@@ -4,22 +4,18 @@ import GameInfoSection from "@/components/ui/GameInfoSection";
 import ItemSection from "@/components/ui/ItemSection";
 import Label from "@/components/ui/Label";
 import { sampleReview } from "@/constant/data";
-import { ChevronLeft, ChevronRight, Heart, userImage } from "@/constant/image";
+import { ChevronLeft, ChevronRight, Heart } from "@/constant/image";
 import { GameProps } from "@/constant/type";
 import { fetchGames, getGameById } from "@/services/gameService";
 import {
-  Accordion,
-  AccordionItem,
   BreadcrumbItem,
   Breadcrumbs,
-  Radio,
-  RadioGroup,
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+export default function Page(){
   const { id } = useParams();
   const gameId = id ? parseInt(id as string) : NaN;
   const [game, setGame] = useState<GameProps>();
@@ -29,7 +25,7 @@ const page = () => {
       const response = await getGameById(id);
       setGame(response);
     } catch (error) {
-      console.error("Failed to load game details");
+      console.error("Failed to load game details", error);
     }
   };
   const loadGames = async () => {
@@ -38,13 +34,13 @@ const page = () => {
       setData(data);
       console.log(data);
     } catch (error) {
-      console.error("Failed to load games");
+      console.error("Failed to load games", error);
     }
   };
   useEffect(() => {
     loadGames();
     getGameDetails(gameId);
-  }, []);
+  }, [gameId]);
 
   const genreGames = Array.isArray(game?.genre)
     ? game?.genre[0]
@@ -76,7 +72,7 @@ const page = () => {
       nextImage();
     }, 7000);
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, nextImage]);
 
   return (
     <div className="relative">
@@ -126,7 +122,7 @@ const page = () => {
             </div>
             <p className="text-detail text-white/50">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
+              industry. Lorem Ipsum has been the industrys standard dummy text
               ever since the 1500s,
             </p>
             <div className="flex flex-col gap-3">
@@ -201,12 +197,12 @@ const page = () => {
           >
             <p className="text-white/50 text-detail text-justify">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
+              industry. Lorem Ipsum has been the industrys standard dummy text
               ever since the 1500s. Lorem Ipsum is simply dummy text of the
               printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s. Lorem Ipsum
+              industrys standard dummy text ever since the 1500s. Lorem Ipsum
               is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since
+              Lorem Ipsum has been the industrys standard dummy text ever since
               the 1500s
             </p>
           </GameInfoSection>
@@ -343,4 +339,3 @@ const page = () => {
   );
 };
 
-export default page;

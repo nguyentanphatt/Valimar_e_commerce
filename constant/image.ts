@@ -4,8 +4,11 @@ import per3_header from "@/public/assets/image/per3_header.png";
 import per3_banner from "@/public/assets/image/per3.jpg";
 import hollow_banner from "@/public/assets/image/hollow.jpg";
 import userImage from "@/public/assets/image/userImage.png"
-import signinImgLg from "@/public/assets/image/loginimagel.png"
+import signinImgLg from "@/public/assets/image/signinlg.png"
 import signinImg from '@/public/assets/image/signin.png'
+import signupImgLg from '@/public/assets/image/signuplg.png'
+import signupImg from '@/public/assets/image/signup.png'
+
 
 import Arrowright from '@/public/assets/icon/arrow-up-right.svg'
 import logo from '@/public/assets/image/logo_1.png'
@@ -24,6 +27,8 @@ export {
     hollow_banner,
     signinImg,
     signinImgLg,
+    signupImg,
+    signupImgLg,
     Arrowright,
     logo,
     Star,

@@ -1,4 +1,5 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import GitHub from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import api from "@/services/api";
@@ -49,11 +50,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: any }) {
-      session.user.id = token.id;
-      session.user.email = token.email;
-      session.user.name = token.name;
+    async session({ session, token }: { session: Session; token: JWT }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.email = token.email;
+        session.user.name = token.name;
+      }
       return session;
-    },
+    }
   },
 });
