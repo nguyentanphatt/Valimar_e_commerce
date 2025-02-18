@@ -2,7 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['valimar-image.s3.amazonaws.com', 'valimar-image.s3.ap-southeast-2.amazonaws.com', 'shared.fastly.steamstatic.com']
+    domains: [
+      "valimar-image.s3.amazonaws.com",
+      "valimar-image.s3.ap-southeast-2.amazonaws.com",
+      "shared.fastly.steamstatic.com",
+      "lh3.googleusercontent.com",
+      "platform-lookaside.fbsbx.com",
+    ],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports

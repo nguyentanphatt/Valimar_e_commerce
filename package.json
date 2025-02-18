@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/checkbox": "^2.3.9",
     "@heroui/radio": "^2.3.9",
     "@heroui/system": "^2.4.7",
     "@heroui/theme": "^2.4.6",

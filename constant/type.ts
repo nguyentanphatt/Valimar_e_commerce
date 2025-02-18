@@ -98,3 +98,12 @@ export interface UserLoginProps{
   email: string;
   password: string;
 }
+
+export interface UserSession {
+  user: {
+    name: string;
+    email: string;
+    image: string | StaticImageData;
+  };
+  expires: string;
+}

@@ -31,7 +31,7 @@ const page = async() => {
           <p className="text-white/50 text-sm md:text-base lg:text-lg">
           Sign up now and gain access to all the content
           </p>
-          <div className="w-full px-10 xl:px-[20%]">
+          <div className="w-full px-10 xl:px-[15%]">
             <SignupForm />
           </div>
         </div>

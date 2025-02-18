@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export default function Page(){
   const { id } = useParams();
@@ -54,18 +54,18 @@ export default function Page(){
 
   console.log(game?.screenshots.length);
 
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-
   const images = [
     game?.imageUrl,
     ...(game?.screenshots?.map((s) => s.image) || []),
   ];
+
+  const nextImage = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const prevImage = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -240,7 +240,7 @@ export default function Page(){
           </GameInfoSection>
           <GameInfoSection
             title="Requirement"
-            className="md:col-span-2 md:w-full md:my-0 lg:items-start"
+            className="h-full md:col-span-2 md:w-full md:h-full md:justify-start md:my-0 lg:items-start"
           >
             {game?.requirements.map((requirement) => (
               <div key={requirement.id}>

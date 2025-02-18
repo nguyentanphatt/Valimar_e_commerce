@@ -3,9 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Header from "@/components/layout/Header";
-import Account from "@/public/assets/icon/account.svg";
 import Footer from "@/components/layout/Footer";
 import Wrapper from "@/components/common/Wrapper";
+import AccountSection from "@/components/ui/AccountSection";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -39,7 +39,10 @@ export default function RootLayout({
             <Navbar />
           </Wrapper>
           <Wrapper>
-            <Account className="hidden md:flex lg:size-10" />
+            {/* <Link href={"/signin"}>
+              <Account className="hidden md:flex lg:size-10" />
+            </Link> */}
+            <AccountSection />
           </Wrapper>
         </div>
         {children}

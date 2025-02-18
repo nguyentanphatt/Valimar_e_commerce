@@ -10,12 +10,16 @@ import { signinImg, signinImgLg } from "@/constant/image";
 
 const page = async () => {
   const session = await auth();
-
+  console.log(session);
+  
   if (session?.user) {
+
+    
     return (
       <div>
         <Link href="/userinfo">User Info</Link>
         <SignOutButton />
+        <Image unoptimized={true} src={session?.user.image || "@/public/assets/icon/account.svg"} className="size-10" alt="Image" width={50} height={50}/>
       </div>
     );
   }

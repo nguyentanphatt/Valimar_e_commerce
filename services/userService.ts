@@ -10,3 +10,17 @@ export const userLogin = async (credentials: UserLoginProps) => {
         throw error;
     }
 }
+
+export const userSignUp = async (name: string, email: string, password: string) => {
+    try{
+        const response = await api.post("/user/signup", {
+            name,
+            email,
+            password
+        })
+        return response.data;
+    } catch (error) {
+        
+        throw error;
+    }
+}
