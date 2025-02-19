@@ -49,7 +49,7 @@ export interface GameProps {
   name: string;
   physical: boolean;
   price: number;
-  releaseDate: string;
+  releaseDate: Date;
   requirements: RequirementProps[];
   screenshots: ScreenshotsProps[];
 }

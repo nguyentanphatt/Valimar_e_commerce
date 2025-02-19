@@ -14,13 +14,12 @@ import {
   per3_header,
   per5_header,
 } from "@/constant/image";
-import { fetchGames } from "@/services/gameService";
-import { GameProps } from "@/constant/type";
+import { fetchGames, getGameNewrelease, getGameWithDiscount } from "@/services/gameService";
 import ItemGridSection from "@/components/ui/ItemGridSection";
 
 export default function Home() {
   const [data, setData] = useState([]);
-  const [special, setSpecial] = useState([]);
+  const [discountGame, setDiscountGame] = useState([]);
   const [newRelease, setNewRelease] = useState([]);
   const [leftImage, leftAnimate] = useAnimate();
   const [rightImage, rightAnimate] = useAnimate();
@@ -42,18 +41,11 @@ export default function Home() {
         const data = await fetchGames();
         setData(data);
 
-        const special = data
-          .filter((game: GameProps) => game.discountPercent > 50)
-          .slice(0, 12);
-        setSpecial(special);
-
-        const newRelease = data
-          .filter(
-            (game: GameProps) =>
-              new Date(game.releaseDate) > new Date("2024-05-01")
-          )
-          .slice(0, 12);
-        setNewRelease(newRelease);
+        const gameWithDiscount = await getGameWithDiscount()
+        setDiscountGame(gameWithDiscount)
+        
+        const gameNewrelease = await getGameNewrelease()
+        setNewRelease(gameNewrelease);
       } catch (error) {
         console.error("Failed to load games", error);
       }
@@ -66,7 +58,7 @@ export default function Home() {
       <div className="relative flex flex-col items-center gap-10 md:h-[200px] lg:h-[400px] lg:py-10 md:overflow-x-hidden">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
-          <span className="text-darkblue">special discount</span>
+          <span className="text-darkblue">discountGame discount</span>
         </p>
         <motion.div
           className="absolute hidden md:flex md:w-[300px] md:h-[150px] lg:w-[500px] lg:h-[300px] md:-left-1 lg:-left-20 md:top-14 lg:top-5 opacity-50 z-10"
@@ -88,16 +80,16 @@ export default function Home() {
       </div>
       <Label title="Best for you" className="hidden md:flex" />
       <Banner />
-      <AdvertismentBanner title="Special offer up to 50%">
+      <AdvertismentBanner title="discountGame offer up to 50%">
         <Image
           src={hollow_banner}
           alt="hollow"
           className="w-full md:w-[350px] lg:w-[550px] xl:w-[800px] h-full object-cover"
         />
       </AdvertismentBanner>
-      <Label title="Special Deals" starSize="hidden md:flex" />
+      <Label title="Game Deals" starSize="hidden md:flex" />
       <div className="lg:flex lg:items-center lg:justify-center">
-        <ItemSection data={special} />
+        <ItemSection data={discountGame} />
       </div>
 
       <AdvertismentBanner

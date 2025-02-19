@@ -167,7 +167,9 @@ export default function Page(){
                         {game.name}
                       </h1>
                       <p className="text-white/50 text-xs md:text-base">
-                        Release Date: {game.releaseDate}
+                        Release Date: {game?.releaseDate
+                    ? new Date(game.releaseDate).toLocaleDateString()
+                    : "N/A"}
                       </p>
                       <p className="text-white/50 text-xs md:text-base">
                         Gerne: {game.genre}

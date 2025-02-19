@@ -13,21 +13,28 @@ export default function ItemCard({
   discountPercent,
   className,
 }: ItemCardProps) {
+  const slug = name
+    .toLowerCase()
+    .replace(/[™'",:]/g, "")
+    .split(/\s+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("_");
+
   return (
-    <Link href={`/game/${id}`} passHref>
+    <Link href={`/game/${id}/${slug}`} passHref>
       <div
         className={twMerge(
           "flex-none w-[130px] md:w-[200px] lg:w-[250px] h-[150px] md:h-[250px] lg:h-[350px] flex flex-col justify-between bg-white/20 rounded shadow-[0_4px_4px_rgba(0,0,0,0.25)] transform transition-transform duration-200 ease-in-out hover:scale-105 md:hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)] ",
           className
         )}
       >
-        <div className="relative w-full h-[70%]">
+        <div className="relative h-[70%]">
           <Image
             src={imageUrl}
             alt={name}
-            layout="fill"
-            objectFit="cover"
-            className="rounded"
+            width={300}
+            height={300}
+            className="rounded w-full h-full object-cover"
             priority
           />
         </div>

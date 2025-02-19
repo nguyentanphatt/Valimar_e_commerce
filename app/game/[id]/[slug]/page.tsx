@@ -6,53 +6,47 @@ import Label from "@/components/ui/Label";
 import { sampleReview } from "@/constant/data";
 import { ChevronLeft, ChevronRight, Heart } from "@/constant/image";
 import { GameProps } from "@/constant/type";
-import { fetchGames, getGameById } from "@/services/gameService";
-import {
-  BreadcrumbItem,
-  Breadcrumbs,
-} from "@nextui-org/react";
+import { getGameById, getGameRelevantByGenre } from "@/services/gameService";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 
-export default function Page(){
+export default function Page() {
   const { id } = useParams();
   const gameId = id ? parseInt(id as string) : NaN;
   const [game, setGame] = useState<GameProps>();
-  const [data, setData] = useState([]);
-  const getGameDetails = async (id: number) => {
-    try {
-      const response = await getGameById(id);
-      setGame(response);
-    } catch (error) {
-      console.error("Failed to load game details", error);
-    }
-  };
-  const loadGames = async () => {
-    try {
-      const data = await fetchGames();
-      setData(data);
-      console.log(data);
-    } catch (error) {
-      console.error("Failed to load games", error);
-    }
-  };
-  useEffect(() => {
-    loadGames();
-    getGameDetails(gameId);
-  }, [gameId]);
+  const [relevantGames, setRelevantGames] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const genreGames = Array.isArray(game?.genre)
     ? game?.genre[0]
     : game?.genre || "";
-  const firstGenre = genreGames.split(",")[0].trim();
-  const similarGames = data
-    .filter((game: GameProps) => game.genre.includes(firstGenre))
-    .slice(0, 12);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const firstGenreOfGame = genreGames.split(",")[0].trim();
 
-  console.log(game?.screenshots.length);
+  const getGameDetail = async (id: number) => {
+    try {
+      const gameById = await getGameById(id);
+      setGame(gameById);
+    } catch (error) {
+      console.error("Failed to load game details", error);
+    }
+  };
+
+  const getRelevantGames = async (firstGenre: string) => {
+    try {
+      const relevantGame = await getGameRelevantByGenre(firstGenre);
+      setRelevantGames(relevantGame);
+    } catch (error) {
+      console.error("Failed to load game details", error);
+    }
+  };
+
+  useEffect(() => {
+    getGameDetail(gameId);
+    getRelevantGames(firstGenreOfGame);
+  }, [gameId, firstGenreOfGame]);
 
   const images = [
     game?.imageUrl,
@@ -109,7 +103,7 @@ export default function Page(){
               }}
             >
               <BreadcrumbItem href="/category/action">
-                {firstGenre}
+                {firstGenreOfGame}
               </BreadcrumbItem>
               <BreadcrumbItem>{game?.name}</BreadcrumbItem>
             </Breadcrumbs>
@@ -200,10 +194,10 @@ export default function Page(){
               industry. Lorem Ipsum has been the industrys standard dummy text
               ever since the 1500s. Lorem Ipsum is simply dummy text of the
               printing and typesetting industry. Lorem Ipsum has been the
-              industrys standard dummy text ever since the 1500s. Lorem Ipsum
-              is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industrys standard dummy text ever since
-              the 1500s
+              industrys standard dummy text ever since the 1500s. Lorem Ipsum is
+              simply dummy text of the printing and typesetting industry. Lorem
+              Ipsum has been the industrys standard dummy text ever since the
+              1500s
             </p>
           </GameInfoSection>
           <GameInfoSection
@@ -218,7 +212,9 @@ export default function Page(){
                 </p>
                 <p>
                   <span className="text-white/50">ReleaseDate:</span>{" "}
-                  {game?.releaseDate}
+                  {game?.releaseDate
+                    ? new Date(game.releaseDate).toLocaleDateString()
+                    : "N/A"}
                 </p>
                 <p>
                   <span className="text-white/50">Language:</span> English,
@@ -333,9 +329,8 @@ export default function Page(){
       </div>
       <Label title="Similar Games" starSize="hidden md:flex" />
       <div className="lg:flex lg:items-center lg:justify-center overflow-x-auto">
-        <ItemSection data={similarGames} />
+        <ItemSection data={relevantGames} />
       </div>
     </div>
   );
-};
-
+}

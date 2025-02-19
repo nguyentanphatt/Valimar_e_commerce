@@ -29,3 +29,33 @@ export const getGameById = async (id: number) => {
     throw error;
   }
 };
+
+export const getGameWithDiscount = async()=>{
+  try {
+    const response = await api.get("/games/discount")
+    return response.data
+  } catch (error) {
+    console.error("Error fetch game with discount", error)
+    throw error
+  }
+}
+
+export const getGameNewrelease = async() => {
+  try {
+    const response = await api.get("/games/newrelease")
+    return response.data
+  } catch (error) {
+    console.error("Error fetch game new realease: ", error)
+    throw error
+  }
+}
+
+export const getGameRelevantByGenre = async(firstGenre: string)=>{
+  try {
+    const response = await api.get(`/games/relevant/${firstGenre}`)
+    return response.data
+  } catch (error) {
+    console.error("Error fetch relevant game: ", error)
+    throw error
+  }
+}

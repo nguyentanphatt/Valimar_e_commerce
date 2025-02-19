@@ -18,7 +18,7 @@ export default function FilterMenu({
     >
         {content.map((item) => (
           <Checkbox value={item.value} key={item.name}>
-            {item.name}
+            <span className="text-white">{item.name}</span>
           </Checkbox>
         ))}
       </CheckboxGroup>
