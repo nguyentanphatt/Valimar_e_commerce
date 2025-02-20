@@ -55,46 +55,46 @@ export interface GameProps {
 }
 
 export interface RequirementProps {
-  id:number;
+  id: number;
   gameId: number;
-  type:string;
-  os?:string | null;
-  processor?:string | null;
-  memory?:string | null;
-  graphics?:string | null;
-  directX?:string | null;
-  network?:string | null;
-  storage?:string | null;
+  type: string;
+  os?: string | null;
+  processor?: string | null;
+  memory?: string | null;
+  graphics?: string | null;
+  directX?: string | null;
+  network?: string | null;
+  storage?: string | null;
 }
 
-export interface ScreenshotsProps{
-  id:number;
-  gameId:number;
-  image:string
+export interface ScreenshotsProps {
+  id: number;
+  gameId: number;
+  image: string;
 }
 
-export interface ItemGridSectionProps{
+export interface ItemGridSectionProps {
   data: ItemCardProps[];
 }
 
-export interface FilterProps{
-  name:string;
-  value:string;
+export interface FilterProps {
+  name: string;
+  value: string;
 }
 
-export interface FilterMenuProps{
+export interface FilterMenuProps {
   title: string;
   content: FilterProps[];
   className?: string;
 }
 
-export interface GameInfoProps{
+export interface GameInfoProps {
   title: string;
   children: ReactNode;
-  className?:string
+  className?: string;
 }
 
-export interface UserLoginProps{
+export interface UserLoginProps {
   email: string;
   password: string;
 }
@@ -106,4 +106,14 @@ export interface UserSession {
     image: string | StaticImageData;
   };
   expires: string;
+}
+
+export interface UserProps {
+  id: number;
+  name?: string;
+  email: string;
+  password: string;
+  createAt: Date;
+  plan: string;
+  image: string;
 }

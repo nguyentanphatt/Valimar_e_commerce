@@ -67,6 +67,22 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({user, account}){
+      if(account?.provider !== "credentials") {
+        try {
+          await api.post("/user/oathlogin", {
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            provider: account?.provider
+          })
+        } catch (error) {
+          console.error("Error saving OAuth user:", error);
+          return false;
+        }
+      }
+      return true
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
