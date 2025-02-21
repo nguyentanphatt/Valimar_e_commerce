@@ -20,6 +20,7 @@ import ChevronRight from '@/public/assets/icon/chevron-right.svg'
 import GoogleIcon from '@/public/assets/icon/googleicon.svg'
 import FacebookIcon from '@/public/assets/icon/facebookicon.svg'
 import AccountIcon from "@/public/assets/icon/account.svg";
+import RemoveIcon from '@/public/assets/icon/remove.svg'
 
 export {
     per5_header,
@@ -40,5 +41,6 @@ export {
     ChevronRight,
     GoogleIcon,
     FacebookIcon,
-    AccountIcon
+    AccountIcon,
+    RemoveIcon
 }
