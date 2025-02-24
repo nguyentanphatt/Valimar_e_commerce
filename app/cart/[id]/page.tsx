@@ -1,96 +1,128 @@
+"use client";
 import Button from "@/components/ui/Button";
+import ItemPrice from "@/components/ui/ItemPrice";
 import { RemoveIcon } from "@/constant/image";
+import { CartItemProps, CartProps } from "@/constant/type";
+import { getUserSubcription } from "@/lib/actions/auth";
+import { fetchCart, removeFromCart, totalCart } from "@/services/cartService";
 import Image from "next/image";
-import React from "react";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const page = () => {
-  //get id user -> send to backend get cart by this user if cart status = pending
-  //get info cart -> get gameId (Cart item it will have game id and digital true false) -> get info game to show off
-  //After paying -> set staus to completed
-  //Add an item to cart it mean send that id and create a cart with that id
-  const data = [
-    {
-      name: "No Man's Sky",
-      link: "https://store.steampowered.com/app/275850/No_Mans_Sky/",
-      releaseDate: "12/08/2016",
-      price: 59.99,
-      discountPrice: 23.99,
-      discountPercent: 60,
-      gameId: "275850",
-      imageUrl:
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/275850/header_alt_assets_13.jpg",
-      genre: "Action, Adventure, Building, Space",
-      developer: "Hello Games",
-      physical: false,
-    },
-    {
-      name: "No Man's Sky2",
-      link: "https://store.steampowered.com/app/275850/No_Mans_Sky/",
-      releaseDate: "12/08/2016",
-      price: 59.99,
-      discountPrice: 23.99,
-      discountPercent: 60,
-      gameId: "275850",
-      imageUrl:
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/275850/header_alt_assets_13.jpg",
-      genre: "Action, Adventure, Building, Space",
-      developer: "Hello Games",
-      physical: false,
-    },
-    {
-      name: "No Man's Sky3",
-      link: "https://store.steampowered.com/app/275850/No_Mans_Sky/",
-      releaseDate: "12/08/2016",
-      price: 59.99,
-      discountPrice: 23.99,
-      discountPercent: 60,
-      gameId: "275850",
-      imageUrl:
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/275850/header_alt_assets_13.jpg",
-      genre: "Action, Adventure, Building, Space",
-      developer: "Hello Games",
-      physical: true,
-    },
-  ];
+const Page = () => {
+  const { id } = useParams();
+  const userId = id ? parseInt(id as string, 10) : 0;
 
   const digital = true;
 
+  const [yourCart, setYourCart] = useState<CartProps>();
+  const [total, setTotal] = useState<number>(0);
+  const [userSubscription, setUserSubscription] = useState<string>("free");
+
+  const getCart = async (id: number) => {
+    try {
+      const cart = await fetchCart(id);
+      setYourCart(cart);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCart(userId);
+    getTotal(userId);
+    subscription();
+  }, [userId]);
+
+  const removeItemFromCart = async (cartItemId: number) => {
+    try {
+      const result = await removeFromCart(cartItemId);
+      await getCart(userId);
+      await getTotal(userId);
+      alert(result.message);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong!");
+    }
+  };
+
+  const getTotal = async (userId: number) => {
+    try {
+      const response = await totalCart(userId);
+      setTotal(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const subscription = async () => {
+    try {
+      const response = await getUserSubcription();
+      setUserSubscription(response.plan);
+      console.log("sub", response.plan);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const subscriptionDiscount = (plan: string) => {
+    if (plan === "pathfinder") return 0.1;
+    if (plan === "traiblazer") return 0.2;
+    if (plan === "luminary") return 0.3;
+    return 0;
+  };
+
+  const finalTotal = () => {
+    const subDiscount = subscriptionDiscount(userSubscription);
+    const discountedTotal = total - total * subDiscount;
+    return Math.max(discountedTotal, 0);
+  };
+
   return (
-    <div className="max-w-[1200px] mx-auto h-screen py-5 md:py-7 lg:py-10">
+    <div className="max-w-[1200px] mx-auto h-screen md:py-7 lg:py-10">
       <h1 className="text-center text-base md:text-xl lg:text-3xl py-3 text-darkblue font-bold uppercase">
         Cart
       </h1>
       <div className="flex flex-col md:flex-row md:items-start md:justify-between">
-        <div className="md:w-[60%]">
-          {data.map((item) => (
+        <div className="md:w-[60%] max-h-[170px] md:max-h-[450px] lg:max-h-[550px] overflow-y-auto">
+          {yourCart?.cartitem.map((item: CartItemProps) => (
             <div
               className="flex items-center justify-between bg-white/20 m-3 p-2 rounded"
-              key={item.name}
+              key={item.id}
             >
               <div className="flex items-center gap-5">
                 <Image
-                  src={item.imageUrl}
-                  alt={item.name}
-                  width={100}
-                  height={100}
+                  src={item.game.imageUrl}
+                  alt={item.game.name}
+                  width={300}
+                  height={300}
                   className="w-14 lg:w-20 h-14 lg:h-20 object-cover"
                 />
-                <div className="flex flex-col gap-0 lg:gap-6 text-sm md:text-base lg:text-xl text-white font-medium">
-                  <h1 className="">{item.name}</h1>
-                  {/* <p>{}</p> */}
-                  <p className="text-darkblue">
-                    $
-                    {item.discountPercent === 0
-                      ? item.price
-                      : item.discountPrice}
-                  </p>
+                <div className="flex flex-col gap-0 justify-between text-sm md:text-base lg:text-xl text-white font-medium">
+                  <h1 className="">{item.game.name}</h1>
+                  {item.physical ? (
+                    <p className="text-sm text-white/80">Type: Physical</p>
+                  ) : (
+                    <p className="text-sm text-white/80">Type: Digital</p>
+                  )}
+                  <ItemPrice
+                    price={item.game.price}
+                    discountPrice={item.game.discountPrice}
+                    discountPercent={item.game.discountPercent}
+                    discountPercentClassname="text-black"
+                  />
                 </div>
               </div>
-              <RemoveIcon className="size-4 md:size-5 lg:size-6" />
+              <div
+                onClick={() => removeItemFromCart(item.id)}
+                className="cursor-pointer"
+              >
+                <RemoveIcon className="size-4 md:size-5 lg:size-6" />
+              </div>
             </div>
           ))}
         </div>
-        <div className="py-3 bg-white/20 mx-3 md:mx-0 md:mr-3 md:mt-3 px-5 text-white rounded md:w-[40%]">
+        <div className="py-3 mt-5 bg-white/20 mx-3 md:mx-0 md:mr-3 md:mt-3 px-5 text-white rounded md:w-[40%]">
           <div className="flex flex-col gap-2">
             <p className="text-sm md:text-base lg:text-xl">Promo code:</p>
             <input
@@ -112,7 +144,7 @@ const page = () => {
           <div className="mt-3 flex flex-col gap-1">
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Subtotal:</span>
-              <span>$80.00</span>
+              <span>${total.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Promo:</span>
@@ -120,7 +152,9 @@ const page = () => {
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Subscription:</span>
-              <span>$0.0</span>
+              <span>
+                ${userSubscription ? subscriptionDiscount(userSubscription) : 0}
+              </span>
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Transfer Fee:</span>
@@ -128,7 +162,7 @@ const page = () => {
             </div>
             <div className="flex justify-between font-bold text-lg lg:text-2xl my-2">
               <span>Total:</span>
-              <span className="text-darkblue">$80.00</span>
+              <span className="text-darkblue">${finalTotal().toFixed(2)}</span>
             </div>
           </div>
           <Button
@@ -141,4 +175,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

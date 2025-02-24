@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 
-const protectedRoutes = ["/userinfo", "/subscription"]
+const protectedRoutes = ["/userinfo", "/subscription", "/cart"]
 
 export default async function middleware(req: NextRequest) {
     const session = await auth()

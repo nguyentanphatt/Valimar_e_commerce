@@ -1,10 +1,6 @@
 "use client";
 import Label from "@/components/ui/Label";
-import {
-  filterMenu01,
-  filterMenu02,
-  subcategories,
-} from "@/constant/data";
+import { filterMenu01, filterMenu02, subcategories } from "@/constant/data";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -25,7 +21,7 @@ import { Menu } from "@/constant/image";
 import FilterMenu from "@/components/ui/FilterMenu";
 import Link from "next/link";
 
-export default function Page(){
+export default function Page() {
   const [isHover, setIsHover] = useState(false);
   const animation = useRef<AnimationPlaybackControls | null>(null);
   const [scope, animate] = useAnimate();
@@ -126,6 +122,15 @@ export default function Page(){
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const slug = (name: string) => {
+    return name
+      .toLowerCase()
+      .replace(/[™'",:]/g, "")
+      .split(/\s+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("_");
+  };
+
   return (
     <div className="py-5 md:py-14 lg:py-20">
       <div className="flex flex-col items-center">
@@ -167,9 +172,10 @@ export default function Page(){
                         {game.name}
                       </h1>
                       <p className="text-white/50 text-xs md:text-base">
-                        Release Date: {game?.releaseDate
-                    ? new Date(game.releaseDate).toLocaleDateString()
-                    : "N/A"}
+                        Release Date:{" "}
+                        {game?.releaseDate
+                          ? new Date(game.releaseDate).toLocaleDateString()
+                          : "N/A"}
                       </p>
                       <p className="text-white/50 text-xs md:text-base">
                         Gerne: {game.genre}
@@ -179,7 +185,10 @@ export default function Page(){
                           Price{" "}
                           <span className="text-darkblue">{game.price}</span>
                         </p>
-                        <Link href={`/game/${game.id}`} passHref>
+                        <Link
+                          href={`/game/${game.id}/${slug(game.name)}`}
+                          passHref
+                        >
                           <Button
                             size="sm"
                             text="See more"
@@ -283,5 +292,4 @@ export default function Page(){
       </div>
     </div>
   );
-};
-
+}

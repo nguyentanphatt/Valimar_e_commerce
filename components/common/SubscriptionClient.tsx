@@ -20,7 +20,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
 
   useEffect(() => {
     getUserDetail(email);
-  }, []);
+  }, [email, getUserDetail]);
 
   const plans = ["free", "pathfinder", "trailblazer", "luminary"];
 

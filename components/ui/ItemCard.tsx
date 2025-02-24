@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import ItemPrice from "./ItemPrice";
 
 export default function ItemCard({
   id,
@@ -43,23 +44,13 @@ export default function ItemCard({
             {name}
           </p>
         </div>
-        <div className="flex pb-2 px-1 pt-2 gap-1 md:px-2 lg:px-3">
-          <p className="font-medium text-xs md:text-base lg:text-2xl text-darkblue">
-            ${discountPercent !== 0 ? discountPrice : price}
-          </p>
-          {discountPercent !== 0 && (
-            <>
-              <p className="-translate-y-1 uppercase text-[10px] md:text-[14px] lg:text-xl line-through text-white/50">
-                ${price}
-              </p>
-              <div className="w-9 md:w-14 h-3 md:h-5 bg-darkblue flex items-center justify-center translate-y-0.5 lg:translate-y-1.5 rounded-sm">
-                <p className="text-[10px] md:text-[14px] lg:text-xl">
-                  {discountPercent}%
-                </p>
-              </div>
-            </>
-          )}
-        </div>
+        <ItemPrice
+          price={price}
+          discountPrice={discountPrice ?? 0}
+          discountPercent={discountPercent ?? 0}
+          discountPriceClassname="ml-1 md:ml-2 lg:ml-3"
+          priceClassname="-translate-y-1"
+        />
       </div>
     </Link>
   );

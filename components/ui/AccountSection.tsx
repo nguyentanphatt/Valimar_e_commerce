@@ -20,7 +20,8 @@ const AccountSection = async () => {
             email: session.user.email || "Unknown",
             image: session.user.image && session.user.image !== "" 
             ? session.user.image 
-            : userImage
+            : userImage,
+            id: session.user.id ? parseInt(session.user.id, 10) : 0
           }} 
           expires={session.expires} 
         />

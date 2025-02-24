@@ -101,6 +101,7 @@ export interface UserLoginProps {
 
 export interface UserSession {
   user: {
+    id: number,
     name: string;
     email: string;
     image: string | StaticImageData;
@@ -116,4 +117,23 @@ export interface UserProps {
   createAt: Date;
   plan: string;
   image: string;
+}
+
+export interface CartItemProps {
+  id: number
+  cartId: number,
+  gameId: number
+  game: GameProps,
+  physical: boolean
+}
+
+export interface CartProps {
+  id: number,
+  createDate: Date,
+  completedDate? :Date,
+  status: String,
+  promocode? :string,
+  deliveryLocation? :string,
+  userId: number,
+  cartitem: CartItemProps[]
 }

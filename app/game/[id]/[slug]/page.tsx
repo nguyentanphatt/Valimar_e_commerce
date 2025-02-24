@@ -1,11 +1,13 @@
 "use client";
 import Button from "@/components/ui/Button";
 import GameInfoSection from "@/components/ui/GameInfoSection";
+import ItemPrice from "@/components/ui/ItemPrice";
 import ItemSection from "@/components/ui/ItemSection";
 import Label from "@/components/ui/Label";
 import { sampleReview } from "@/constant/data";
 import { ChevronLeft, ChevronRight, Heart } from "@/constant/image";
 import { GameProps } from "@/constant/type";
+import { addItemToCart } from "@/lib/actions/auth";
 import { getGameById, getGameRelevantByGenre } from "@/services/gameService";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import Image from "next/image";
@@ -18,6 +20,7 @@ export default function Page() {
   const [game, setGame] = useState<GameProps>();
   const [relevantGames, setRelevantGames] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPhysical, setIsPhysical] = useState(false);
 
   const genreGames = Array.isArray(game?.genre)
     ? game?.genre[0]
@@ -67,6 +70,20 @@ export default function Page() {
     }, 7000);
     return () => clearInterval(interval);
   }, [currentIndex, nextImage]);
+
+  const handleAddToCart = async (gameId: number, physical: boolean) => {
+    try {
+      const result = await addItemToCart(gameId, physical);
+      alert(result.message);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong!");
+    }
+  };
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPhysical(event.target.value === "physical");
+  };
 
   return (
     <div className="relative">
@@ -134,52 +151,43 @@ export default function Page() {
                     <div className="flex gap-2 items-center">
                       <input
                         type="radio"
-                        name=""
-                        id=""
+                        name="purchaseType"
                         value="digital"
-                        className="size-3"
+                        checked={!isPhysical}
+                        onChange={handleOptionChange}
+                        className="size-4"
                       />
-                      <p className="">Digital</p>
+                      <p>Digital</p>
                     </div>
                     <div className="flex gap-2 items-center">
                       <input
                         type="radio"
-                        name=""
-                        id=""
+                        name="purchaseType"
                         value="physical"
-                        className="size-3"
+                        checked={isPhysical}
+                        onChange={handleOptionChange}
+                        className="size-4"
                       />
-                      <p className="">Physical</p>
+                      <p>Physical</p>
                     </div>
                   </div>
                 </div>
               )}
             </div>
             <div className="flex md:flex-col items-center md:items-start justify-between gap-0 md:gap-5">
-              <div className="flex pb-2 gap-1 md:gap-2">
-                <p className="font-semibold text-base md:text-xl lg:text-2xl text-darkblue">
-                  $
-                  {game?.discountPercent !== 0
-                    ? game?.discountPrice
-                    : game.price}
-                </p>
-                {game?.discountPercent !== 0 && (
-                  <>
-                    <p className=" uppercase text-xs md:text-sm lg:text-xl line-through text-white/50">
-                      ${game?.price}
-                    </p>
-                    <div className="w-10 md:w-16 h-5 md:h-7 bg-darkblue flex items-center justify-center translate-y-0.5 lg:translate-y-1.5 rounded-sm">
-                      <p className="text-xs md:text-sm lg:text-xl">
-                        {game?.discountPercent}%
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
+            <ItemPrice
+            price={game?.price || 0}
+            discountPrice={game?.discountPrice || 0}
+            discountPercent={game?.discountPercent || 0}
+            discountPriceClassname="text-xl md:text-2xl lg:text-3xl"
+            priceClassname="text-lg md:text-xl lg:text-2xl -translate-y-1"
+            discountPercentClassname="h-5 md:h-6 lg:h-7"
+          />
               <Button
                 size="sm"
                 text="Add to Cart"
                 className="w-32 h-7 md:w-full md:h-10 md:text-base"
+                onClick={() => game?.id && handleAddToCart(game.id, isPhysical)}
               />
             </div>
           </div>
@@ -236,10 +244,10 @@ export default function Page() {
           </GameInfoSection>
           <GameInfoSection
             title="Requirement"
-            className="h-full md:col-span-2 md:w-full md:h-full md:justify-start md:my-0 lg:items-start"
+            className="h-full md:col-span-2 md:w-full md:h-full md:items-start md:my-0 lg:items-start"
           >
             {game?.requirements.map((requirement) => (
-              <div key={requirement.id}>
+              <div key={requirement.id} className="">
                 <h1 className="text-darkblue text-sm md:text-base">
                   {requirement.type.toUpperCase()}
                 </h1>

@@ -1,6 +1,7 @@
 import { GameProps } from "@/constant/type";
 import Image from "next/image";
 import Link from "next/link";
+import ItemPrice from "./ItemPrice";
 
 export default function GameCard({
   name,
@@ -35,23 +36,11 @@ export default function GameCard({
               printing and typesetting industry.
             </p>
           </div>
-          <div className="flex gap-1">
-            <p className="font-medium text-xs md:text-base lg:text-2xl text-darkblue">
-              ${discountPercent !== 0 ? discountPrice : price}
-            </p>
-            {discountPercent !== 0 && (
-              <>
-                <p className="uppercase text-[10px] md:text-[14px] lg:text-xl line-through text-white/50">
-                  ${price}
-                </p>
-                <div className="w-9 md:w-14 h-3 md:h-5 bg-darkblue flex items-center justify-center translate-y-0.5 lg:translate-y-1.5 rounded-sm">
-                  <p className="text-[10px] md:text-[14px] lg:text-xl">
-                    {discountPercent}%
-                  </p>
-                </div>
-              </>
-            )}
-          </div>
+          <ItemPrice
+            price={price}
+            discountPrice={discountPrice}
+            discountPercent={discountPercent}
+          />
         </div>
       </div>
     </Link>
