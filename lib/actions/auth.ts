@@ -97,8 +97,8 @@ export const addItemToCart = async (
   gameId: number,
   physical: boolean
 ): Promise<{ success: boolean; message: string }> => {
-  const user = await getUser();
-  const userId = user?.id ? parseInt(user.id as string, 10) : 0;
+  const session = await getUser();
+  const userId = session?.user?.id ? parseInt(session.user.id as string, 10) : 0;
 
   if (!userId) {
     return { success: false, message: "User not found" };
@@ -137,10 +137,10 @@ export const addItemToCart = async (
 
 export const getUserSubcription = async () => {
   
-  const user = await getUser();
+  const session = await getUser();
 
-  if (user?.email) {
-    const userdetail = await userDetail(user.email);
+  if (session?.user?.email) {
+    const userdetail = await userDetail(session?.user?.email);
     return userdetail
   } else {
     throw new Error("User email is undefined");

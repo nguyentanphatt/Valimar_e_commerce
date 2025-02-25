@@ -5,10 +5,13 @@ import Link from "next/link";
 import React from "react";
 import AccountDropdown from "./AccountDropdown";
 import { userImage } from "@/constant/image";
+import { twMerge } from "tailwind-merge";
 
-const AccountSection = async () => {
+const AccountSection = async ({className} : {className?:string}) => {
   const session = await auth();
   console.log(session);
+
+  
 
   if (session?.user) {
     return (
@@ -23,7 +26,8 @@ const AccountSection = async () => {
             : userImage,
             id: session.user.id ? parseInt(session.user.id, 10) : 0
           }} 
-          expires={session.expires} 
+          expires={session.expires}
+          className={className}
         />
       </div>
     );
@@ -32,7 +36,7 @@ const AccountSection = async () => {
   return (
     <div>
       <Link href={"/signin"}>
-        <AccountIcon className="hidden md:block md:size-7 lg:size-10 rounded-full" />
+        <AccountIcon className={twMerge("hidden md:block md:size-7 lg:size-10 rounded-full",className)} />
       </Link>
     </div>
   );

@@ -13,6 +13,7 @@ import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Page() {
   const { id } = useParams();
@@ -74,10 +75,14 @@ export default function Page() {
   const handleAddToCart = async (gameId: number, physical: boolean) => {
     try {
       const result = await addItemToCart(gameId, physical);
-      alert(result.message);
+      if(result.message.includes("Game already in cart")){
+        toast.error(result.message)
+      } else {
+        toast.success(result.message)
+      }
     } catch (error) {
       console.error(error);
-      alert("Something went wrong!");
+      toast.error("Something went wrong!")
     }
   };
 
@@ -86,7 +91,7 @@ export default function Page() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative py-20 lg:py-28">
       <div className="flex flex-col items-center justify-center">
         <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-5 items-center justify-center md:px-7 py-5 max-w-[1200px]">
           <div className="relative w-[90%] h-[250px] mb-5 md:mb-0 md:h-[80%] lg:h-[100%] md:w-[100%] md:col-span-1 group">

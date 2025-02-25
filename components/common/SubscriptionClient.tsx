@@ -55,7 +55,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
   };
 
   return (
-    <div className="py-10">
+    <div className=" py-40 md:py-24">
       <div className="flex flex-col items-center justify-center gap-2">
         <p className="text-white text-xl md:text-3xl lg:text-4xl">
           Upgrade Your Experience

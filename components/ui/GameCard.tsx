@@ -22,7 +22,7 @@ export default function GameCard({
     <Link href={`/game/${id}/${slug}`} passHref>
       <div className="flex flex-row gap-2 lg:gap-4 py-2 px-2 hover:bg-white/10 transition-all duration-300 ">
         <div>
-          <Image src={imageUrl} alt="Game Image" width={300} height={300} />
+          <Image src={imageUrl} alt="Game Image" width={300} height={300} className="w-[100px] h-[60px] md:w-[150px] md:h-[100px] lg:w-[300px] lg:h-[120px]"/>
         </div>
         <div className="flex flex-col gap-1 justify-between">
           <div>

@@ -9,24 +9,24 @@ import {
 } from "@/lib/actions/auth";
 import { GoogleSignInButton } from "./GoogleSignInButton";
 import FacebookSignInButton from "./FacebookSignInButton";
+import { toast } from "sonner";
 
 export const SigninForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError("");
     try {
       await userLogin(email, password);
+      toast.success("Login Success")
       router.push("/");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.message);
+        toast.error(error.message)
       } else {
-        setError("An unknown error occurred");
+        toast.error("An unknown error occurred");
       }
     }
   };
@@ -57,7 +57,6 @@ export const SigninForm = () => {
             className="rounded-lg w-full outline-none text-black py-1 px-2"
           />
           <div className="h-1">
-          {error && <p className="text-red-600 w-full md:text-sm lg:text-base">{error || " "}</p>}
           </div>
           <p className=" self-end text-darkblue md:text-sm lg:text-base">Forgot Password ?</p>
           <Button

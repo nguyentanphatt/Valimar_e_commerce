@@ -132,7 +132,7 @@ export default function Page() {
   };
 
   return (
-    <div className="py-5 md:py-14 lg:py-20">
+    <div className="py-44 md:py-20 lg:py-32">
       <div className="flex flex-col items-center">
         <h1 className="text-xl md:text-3xl lg:text-4xl text-darkblue font-bold">
           {category?.name}
@@ -143,7 +143,7 @@ export default function Page() {
       </div>
       <Label
         title="Featured Game"
-        className="justify-center md:justify-start px-10 text-3xl"
+        className="justify-center px-10 text-3xl"
       />
       <div className="flex mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <motion.div
@@ -215,9 +215,9 @@ export default function Page() {
       </div>
       <Label
         title="Game List"
-        className="justify-center md:justify-start px-10 text-3xl"
+        className="justify-center px-10 text-3xl"
       />
-      <div className="flex flex-col relative md:grid md:grid-cols-7 lg:grid-cols-6 md:gap-5 md:px-2 lg:px-5">
+      <div className="max-w-[1440px] mx-auto flex flex-col relative md:grid md:grid-cols-7 lg:grid-cols-6 md:gap-5 md:px-2 lg:px-5">
         <div
           className={`fixed top-4 right-2 bg-darkblue/50 rounded-full size-8 flex md:hidden items-center justify-center backdrop-blur-sm shadow-lg transition-opacity duration-300 ${
             showMenu ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -246,7 +246,7 @@ export default function Page() {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-        <div className="hidden md:flex md:flex-col md:col-span-2 lg:col-span-1 md:gap-5 py-2 ">
+        <div className=" hidden md:flex md:flex-col md:col-span-2 lg:col-span-1 md:gap-5 py-2 ">
           <FilterMenu
             content={filterMenu01}
             title="Your Choice"

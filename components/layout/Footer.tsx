@@ -2,7 +2,7 @@ import { Arrowright } from "@/constant/image";
 
 export default function Footer() {
   return (
-    <div className="mt-6 md:mt-10 relative -z-10 overflow-x-clip">
+    <div className="mt-6 mb-14 md:mb-0 md:mt-10 relative -z-10 overflow-x-clip">
       <div className="absolute h-[400px] md:h-[500px] w-[1600px] bottom-0 left-1/2 -translate-x-1/2 bg-darkblue/50 [mask-image:radial-gradient(50%_50%_at_bottom_center,black,transparent)] -z-10" />
       <div className="border-t-2 border-white/30 py-6 flex flex-col items-center justify-center gap-2 md:gap-5 lg:gap-10">
         <p className="uppercase font-bold text-base md:text-2xl lg:text-3xl text-white">

@@ -82,7 +82,7 @@ export default function SearchPages() {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
-    <div>
+    <div className="py-24 max-w-[1440px] mx-auto">
       <div className="flex items-center justify-center py-5">
         <SearchBar />
       </div>

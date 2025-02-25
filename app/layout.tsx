@@ -6,6 +6,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Wrapper from "@/components/common/Wrapper";
 import AccountSection from "@/components/ui/AccountSection";
+import { Toaster } from "@/components/ui/sonner";
+import PhoneNavbar from "@/components/common/PhoneNavbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,24 +33,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-dark`}
       >
-        <div className="md:flex md:items-center md:justify-center md:gap-14 lg:gap-24">
-          <Wrapper>
-            <Header />
-          </Wrapper>
-          <Wrapper>
+        <Wrapper scrollable={true}>
+          <Header />
+          <AccountSection/>
+        </Wrapper>
+        {/* <Wrapper>
             <Navbar />
-          </Wrapper>
-          <Wrapper>
-            {/* <Link href={"/signin"}>
-              <Account className="hidden md:flex lg:size-10" />
-            </Link> */}
+          </Wrapper> */}
+        {/* <Wrapper>
             <AccountSection />
-          </Wrapper>
-        </div>
+          </Wrapper> */}
         {children}
-        <Wrapper>
+        <Toaster richColors position="top-center" duration={2000} />
+        <Wrapper scrollable={false}>
           <Footer />
         </Wrapper>
+        <PhoneNavbar />
       </body>
     </html>
   );

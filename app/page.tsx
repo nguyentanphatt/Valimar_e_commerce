@@ -54,11 +54,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative mt-40 lg:mt-28">
       <div className="relative flex flex-col items-center gap-10 md:h-[200px] lg:h-[400px] lg:py-10 md:overflow-x-hidden">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
-          <span className="text-darkblue">discountGame discount</span>
+          <span className="text-darkblue">discount</span>
         </p>
         <motion.div
           className="absolute hidden md:flex md:w-[300px] md:h-[150px] lg:w-[500px] lg:h-[300px] md:-left-1 lg:-left-20 md:top-14 lg:top-5 opacity-50 z-10"

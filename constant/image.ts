@@ -21,6 +21,9 @@ import GoogleIcon from '@/public/assets/icon/googleicon.svg'
 import FacebookIcon from '@/public/assets/icon/facebookicon.svg'
 import AccountIcon from "@/public/assets/icon/account.svg";
 import RemoveIcon from '@/public/assets/icon/remove.svg'
+import HomeIcon from '@/public/assets/icon/home.svg'
+import NotificationIcon from '@/public/assets/icon/notification.svg'
+import CartIcon from '@/public/assets/icon/cart.svg'
 
 export {
     per5_header,
@@ -42,5 +45,8 @@ export {
     GoogleIcon,
     FacebookIcon,
     AccountIcon,
-    RemoveIcon
+    RemoveIcon,
+    HomeIcon,
+    NotificationIcon,
+    CartIcon
 }

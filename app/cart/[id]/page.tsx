@@ -8,6 +8,7 @@ import { fetchCart, removeFromCart, totalCart } from "@/services/cartService";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Page = () => {
   const { id } = useParams();
@@ -39,10 +40,10 @@ const Page = () => {
       const result = await removeFromCart(cartItemId);
       await getCart(userId);
       await getTotal(userId);
-      alert(result.message);
+      toast.success(result.message)
     } catch (error) {
       console.error(error);
-      alert("Something went wrong!");
+      toast.error("Error")
     }
   };
 
@@ -79,7 +80,7 @@ const Page = () => {
   };
 
   return (
-    <div className="max-w-[1200px] mx-auto h-screen md:py-7 lg:py-10">
+    <div className="max-w-[1200px] mx-auto h-screen py-40 md:py-20 lg:py-24">
       <h1 className="text-center text-base md:text-xl lg:text-3xl py-3 text-darkblue font-bold uppercase">
         Cart
       </h1>
