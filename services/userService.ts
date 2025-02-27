@@ -42,9 +42,19 @@ export const changeSubscriptionOfUser = async (
   email: string
 ) => {
   try {
-    const response = await api.post(`/user/subscription/${email}`, {
+    const response = await api.post(`/user/subscription`, {
       newPlan,
+      email
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getUserById = async (userId: number) => {
+  try {
+    const response = await api.get(`/user/userdetail/${userId}`);
     return response.data;
   } catch (error) {
     throw error;

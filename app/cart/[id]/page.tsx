@@ -6,7 +6,7 @@ import { CartItemProps, CartProps } from "@/constant/type";
 import { getUserSubcription } from "@/lib/actions/auth";
 import { fetchCart, removeFromCart, totalCart } from "@/services/cartService";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -14,11 +14,13 @@ const Page = () => {
   const { id } = useParams();
   const userId = id ? parseInt(id as string, 10) : 0;
 
-  const digital = true;
+  const router = useRouter();
 
   const [yourCart, setYourCart] = useState<CartProps>();
   const [total, setTotal] = useState<number>(0);
   const [userSubscription, setUserSubscription] = useState<string>("free");
+  const [promocode, setPromocode] = useState("")
+  const [deliveryLocation, setDeliveryLocation] = useState("")
 
   const getCart = async (id: number) => {
     try {
@@ -74,10 +76,29 @@ const Page = () => {
   };
 
   const finalTotal = () => {
+    if (isNaN(total) || total === undefined || total === null) return 0;
+  
     const subDiscount = subscriptionDiscount(userSubscription);
     const discountedTotal = total - total * subDiscount;
+  
     return Math.max(discountedTotal, 0);
   };
+  
+
+  const handleCheckout = () => {
+    const cartData = {
+      id: yourCart?.id,
+      userId: userId,
+      promocode: promocode,
+      deliveryLocation: deliveryLocation,
+      amount: finalTotal().toFixed(2),
+      numberOfItem: yourCart?.cartitem.length,
+      type: "cart"
+    }
+
+    localStorage.setItem("cartData", JSON.stringify(cartData))
+    router.push(`/checkout`)
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto h-screen py-40 md:py-20 lg:py-24">
@@ -130,22 +151,24 @@ const Page = () => {
               type="text"
               placeholder="Enter your promo code..."
               className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
+              value={promocode}
+              onChange={(e) => setPromocode(e.target.value)}            
             />
           </div>
-          {digital === true && (
             <div className="flex flex-col gap-2 mt-3">
               <p className="text-sm md:text-base lg:text-xl">Address:</p>
               <input
                 type="text"
                 placeholder="Enter your address..."
                 className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
-              />
+                value={deliveryLocation}
+                onChange={(e) => setDeliveryLocation(e.target.value)}
+             />
             </div>
-          )}
           <div className="mt-3 flex flex-col gap-1">
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Subtotal:</span>
-              <span>${total.toFixed(2)}</span>
+              <span>${!isNaN(total) && total !== undefined ? total.toFixed(2) : "0.00"}</span>
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Promo:</span>
@@ -169,6 +192,7 @@ const Page = () => {
           <Button
             text="CHECKOUT"
             className="w-full h-7 lg:h-10 text-black text-sm lg:text-base rounded-lg"
+            onClick={handleCheckout}
           />
         </div>
       </div>

@@ -75,7 +75,7 @@ export default function Page() {
   const handleAddToCart = async (gameId: number, physical: boolean) => {
     try {
       const result = await addItemToCart(gameId, physical);
-      if(result.message.includes("Game already in cart")){
+      if(result.message.includes("Game already in cart") || result.message.includes("Failed to add item to cart")){
         toast.error(result.message)
       } else {
         toast.success(result.message)

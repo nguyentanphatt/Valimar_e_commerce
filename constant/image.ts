@@ -24,6 +24,7 @@ import RemoveIcon from '@/public/assets/icon/remove.svg'
 import HomeIcon from '@/public/assets/icon/home.svg'
 import NotificationIcon from '@/public/assets/icon/notification.svg'
 import CartIcon from '@/public/assets/icon/cart.svg'
+import CheckoutSuccessIcon from '@/public/assets/icon/paymentcheck.svg'
 
 export {
     per5_header,
@@ -48,5 +49,6 @@ export {
     RemoveIcon,
     HomeIcon,
     NotificationIcon,
-    CartIcon
+    CartIcon,
+    CheckoutSuccessIcon
 }

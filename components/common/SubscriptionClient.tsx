@@ -11,7 +11,6 @@ export default function SubscriptionClient({ email }: { email: string }) {
   const getUserDetail = async (email: string) => {
     try {
       const userdetail = await userDetail(email);
-      console.log(user);
       setUser(userdetail);
     } catch (error) {
       console.error("Failed to get user detail", error);
@@ -72,6 +71,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
             features={features1}
             buttonText={getButtonText(user?.plan, "free")}
             buttonClassName={getButtonConfig(user?.plan, "free").className}
+            userId={user?.id}
           />
         </div>
         <div className="sticky top-[104px] md:top-0 z-20 ">
@@ -81,6 +81,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
             features={features2}
             buttonText={getButtonText(user?.plan, "pathfinder")}
             buttonClassName={getButtonConfig(user?.plan, "pathfinder").className}
+            userId={user?.id}
           />
         </div>
         <div className="sticky top-[144px] md:top-0 z-30 ">
@@ -90,6 +91,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
             features={features3}
             buttonText={getButtonText(user?.plan, "trailblazer")}
             buttonClassName={getButtonConfig(user?.plan, "trailblazer").className}
+            userId={user?.id}
             recommend
           />
         </div>
@@ -100,6 +102,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
             features={features4}
             buttonText={getButtonText(user?.plan, "luminary")}
             buttonClassName={getButtonConfig(user?.plan, "luminary").className}
+            userId={user?.id}
           />
         </div>
       </div>

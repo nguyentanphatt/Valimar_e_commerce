@@ -35,6 +35,7 @@ export interface SubscriptionCardProps {
   buttonText: string;
   recommend?: boolean;
   buttonClassName?: string;
+  userId?:number
 }
 
 export interface GameProps {
@@ -136,4 +137,15 @@ export interface CartProps {
   deliveryLocation? :string,
   userId: number,
   cartitem: CartItemProps[]
+}
+
+export interface CartDataProps {
+  id: number,
+  userId: number,
+  amount: string,
+  deliveryLocation?: string,
+  promocode?: string,
+  numberOfItem?: number,
+  newPlan?: string,
+  type: string
 }

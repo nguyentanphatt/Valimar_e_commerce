@@ -98,15 +98,22 @@ export const addItemToCart = async (
   physical: boolean
 ): Promise<{ success: boolean; message: string }> => {
   const session = await getUser();
-  const userId = session?.user?.id ? parseInt(session.user.id as string, 10) : 0;
+  const userEmail = session?.user?.email
 
-  if (!userId) {
+  const userInfo = await userDetail(userEmail || "")
+
+  console.log(userInfo);
+  
+
+  //const userId = session?.user?.id ? parseInt(session.user.id as string, 10) : 0;
+
+  if (!userInfo.id) {
     return { success: false, message: "User not found" };
   }
 
   try {
     const response: { success: boolean; message?: string } = await addToCart(
-      userId,
+      userInfo.id,
       gameId,
       physical
     );

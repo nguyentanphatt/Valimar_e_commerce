@@ -63,3 +63,27 @@ export const totalCart = async(userId: number) => {
     throw error;
   }
 }
+
+export const fetchCartById = async(id:number) => {
+  try {
+    const response = await api.get(`cart/getcartbyid/${id}`)
+    return response.data
+  } catch (error) {
+    console.error("Error fetch cart:", error);
+    throw error;
+  }
+}
+
+export const updateCart = async(id:number, promocode:string, deliveryLocation:string) => {
+  try {
+    const response = await api.post(`cart/updatecart`,{
+      id,
+      promocode,
+      deliveryLocation,
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error update cart:", error);
+    throw error;
+  }
+}

@@ -61,7 +61,18 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		animation:{
+			'ping-large': "ping-large 1s ease-in-out infinite",
+		},
+		keyframes:{
+			'ping-large': {
+			  '75%, 100%':{
+				transform: 'scale(2)',
+				opacity: '0'
+			  }
+			},
+		}
   	},
   	screens: {
   		sm: '375px',
