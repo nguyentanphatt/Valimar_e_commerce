@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ItemCard from "./ItemCard";
+import ItemCard from "./item-card";
 import { twMerge } from "tailwind-merge";
 import { ItemSectionProps } from "@/constant/type";
 
 export default function ItemSection({
   data,
   itemPerPage = 5,
-  className,
-  largeItemId,
+  className
 }: ItemSectionProps) {
   const [lgScreen, setLgScreen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -51,7 +50,6 @@ export default function ItemSection({
         )}
       >
         {(lgScreen ? currentItems : data).map((item, index) => {
-          const largeId = largeItemId?.includes(item.id);
           return (
             <ItemCard
               id={item.id}
@@ -60,7 +58,6 @@ export default function ItemSection({
               price={item.price}
               discountPrice={item.discountPrice}
               discountPercent={item.discountPercent}
-              className={largeId ? "w-[272px] md:w-[420px] lg:w-[250px] col-span-2 lg:col-span-1" : ""}
               key={index}
             />
           );

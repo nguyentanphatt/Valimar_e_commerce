@@ -1,8 +1,10 @@
 "use client";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/button";
 import { CheckoutSuccessIcon } from "@/constant/image";
 import { CartDataProps, UserProps } from "@/constant/type";
+import { sendMail } from "@/lib/send-mail";
 import { updateCart } from "@/services/cartService";
+import { generateGameKey } from "@/services/gameService";
 import { changeSubscriptionOfUser, getUserById } from "@/services/userService";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -49,37 +51,48 @@ const page = () => {
     }
   }
 
-  /* useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cartData") || "{}");
+  
+  
+  const generateAndSendKeys = async () => {
+    console.log(cartData);
+    if(!cartData?.digitalGameIds || !userInfo?.email) return
 
-    if (cart?.userId) {
-      setCartData(cart);
+    try {
+      const keys: string[] = []
+      for(const gameId of cartData.digitalGameIds){
+        const res = await generateGameKey(gameId)
+        console.log("res", res);
+        
+        if(res?.key){
+          keys.push(res.key)
+        }
+      }
+      console.log("keys", keys);
+      
+      if(keys.length > 0){
+        console.log("email", userInfo.email);
+        
+        await sendMail({
+          sendTo: userInfo.email,
+          key: keys
+        })
+      }
+    } catch (error) {
+      console.error("Error generating and sending keys:", error);
     }
-    setDate(new Date().toLocaleDateString());
-  }, []);
+  }
 
-  useEffect(() => {
-    if (cartData?.userId) {
-      getUserName(cartData.userId);
-      updateCartStatus(
-        cartData.id,
-        cartData.promocode,
-        cartData.deliveryLocation
-      );
-    }
-  }, [cartData]); */
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const cart = JSON.parse(localStorage.getItem("cartData") || "{}");
-      console.log("Cart Data:", cart);
   
       if (cart?.userId) {
         setCartData(cart);
         setDate(new Date().toLocaleDateString());
   
-        await getUserName(cart.userId); // Updates userInfo asynchronously
+        await getUserName(cart.userId);
   
         if (cart?.type === "cart") {
           await updateCartStatus(cart.id, cart.promocode, cart.deliveryLocation);
@@ -100,6 +113,11 @@ const page = () => {
     }
   }, [userInfo, cartData]);
 
+  useEffect(() => {
+    if (cartData?.type === "cart" && cartData.digitalGameIds && userInfo?.email) {
+      generateAndSendKeys();
+    }
+  }, [cartData, userInfo]);
   const handleCompleted = () => {
     localStorage.removeItem("cartData");
     router.push("/");

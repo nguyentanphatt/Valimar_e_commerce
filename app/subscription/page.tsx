@@ -1,7 +1,7 @@
 'use server'
 import React from "react";
 import { auth } from "@/lib/auth";
-import SubscriptionClient from "@/components/common/SubscriptionClient";
+import SubscriptionClient from "@/components/common/subscription-client";
 
 const page = async() => {
   const session = await auth()

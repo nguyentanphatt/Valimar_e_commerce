@@ -2,7 +2,7 @@
 import { CartIcon, HomeIcon, NotificationIcon } from '@/constant/image'
 import Link from 'next/link'
 import React from 'react'
-import AccountSection from '../ui/AccountSection'
+import AccountSection from '../ui/account-section'
 import { auth } from '@/lib/auth'
 
 const PhoneNavbar = async() => {

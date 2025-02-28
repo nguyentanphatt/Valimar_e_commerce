@@ -3,6 +3,9 @@ import per5_header from "@/public/assets/image/per5_header.jpg";
 import per3_header from "@/public/assets/image/per3_header.png";
 import per3_banner from "@/public/assets/image/per3.jpg";
 import hollow_banner from "@/public/assets/image/hollow.jpg";
+import finalfantasy from '@/public/assets/image/final.jpg'
+import kingdom from '@/public/assets/image/kingdom.jpg'
+import balatro from '@/public/assets/image/balatro.jpg'
 import userImage from "@/public/assets/image/userImage.png"
 import signinImgLg from "@/public/assets/image/signinlg.png"
 import signinImg from '@/public/assets/image/signin.png'
@@ -31,6 +34,9 @@ export {
     per3_header,
     per3_banner,
     hollow_banner,
+    finalfantasy,
+    kingdom,
+    balatro,
     signinImg,
     signinImgLg,
     signupImg,

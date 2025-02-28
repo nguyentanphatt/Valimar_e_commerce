@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/common/Navbar";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 import Wrapper from "@/components/common/Wrapper";
-import AccountSection from "@/components/ui/AccountSection";
+import AccountSection from "@/components/ui/account-section";
 import { Toaster } from "@/components/ui/sonner";
 import PhoneNavbar from "@/components/common/PhoneNavbar";
 const geistSans = Geist({
@@ -37,12 +36,6 @@ export default function RootLayout({
           <Header />
           <AccountSection/>
         </Wrapper>
-        {/* <Wrapper>
-            <Navbar />
-          </Wrapper> */}
-        {/* <Wrapper>
-            <AccountSection />
-          </Wrapper> */}
         {children}
         <Toaster richColors position="top-center" duration={2000} />
         <Wrapper scrollable={false}>

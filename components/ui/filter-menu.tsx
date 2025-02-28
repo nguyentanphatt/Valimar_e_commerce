@@ -9,9 +9,9 @@ export default function FilterMenu({
   onChange,
 }: FilterMenuProps & { onChange: (values: string[]) => void }) {
   return (
-    <div className="flex flex-col gap-2 bg-white/30">
+    <div className="flex flex-col gap-2 bg-white/20">
       <div className="bg-white/10 shadow-sm shadow-black flex items-center justify-center ">
-        <div className="text-white text-base lg:text-xl"> {title}</div>
+        <div className="text-base lg:text-xl text-darkblue"> {title}</div>
       </div>
       <CheckboxGroup className={twMerge("text-white text-xs md:text-sm lg:text-base px-2 py-3", className)}
         onChange={onChange}    

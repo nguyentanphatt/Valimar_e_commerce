@@ -59,3 +59,14 @@ export const getGameRelevantByGenre = async(firstGenre: string)=>{
     throw error
   }
 }
+
+export const generateGameKey = async(id: number) => {
+  try {
+    const response = await api.post('/games/generatekey',{
+      id
+    })
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}

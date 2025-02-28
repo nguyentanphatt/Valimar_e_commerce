@@ -64,6 +64,7 @@ export default {
   		},
 		animation:{
 			'ping-large': "ping-large 1s ease-in-out infinite",
+			'twinkle': "twinkle 1s infinite ease-in-out alternate"
 		},
 		keyframes:{
 			'ping-large': {
@@ -72,6 +73,11 @@ export default {
 				opacity: '0'
 			  }
 			},
+			'twinkle': {
+				'0%': { opacity: '1', transform: 'scale(1)' },
+				'50%': { opacity: '0.3', transform: 'scale(1.2)' },
+				'100%': { opacity: '1', transform: 'scale(1)' },
+			}
 		}
   	},
   	screens: {

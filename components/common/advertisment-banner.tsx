@@ -1,22 +1,32 @@
+"use client";
 import React, { HTMLAttributes } from "react";
-import Button from "../ui/Button";
+import Button from "../ui/button";
 import { twMerge } from "tailwind-merge";
+import { useRouter } from "next/navigation";
+import { slug } from "@/lib/slug";
 
 export default function AdvertismentBanner({
   title,
   buttonText = "Check it now",
   children,
   bgColor,
+  bannerId,
+  name,
   ...props
 }: {
   title: string;
   buttonText?: string;
-  bgColor?:string
+  bgColor?: string;
+  bannerId:number;
+  name:string
 } & HTMLAttributes<HTMLDivElement>) {
-
+  const router = useRouter();
   return (
     <div
-      className={twMerge("relative mt-10 w-full max-w-[375px] md:max-w-[768px] lg:max-w-full mx-auto h-[100px] md:h-[200px] xl:h-[300px] md:flex md:items-center md:justify-between md:bg-black",bgColor)}
+      className={twMerge(
+        "relative mt-10 w-full max-w-[375px] md:max-w-[768px] lg:max-w-full mx-auto h-[100px] md:h-[200px] xl:h-[300px] md:flex md:items-center md:justify-between md:bg-black",
+        bgColor
+      )}
       {...props}
     >
       <div className="absolute inset-0 md:inset-auto md:relative flex flex-col items-center justify-center md:ml-12 xl:ml-32">
@@ -24,9 +34,9 @@ export default function AdvertismentBanner({
           {title}
         </p>
         <Button
-          size="md"
           text={buttonText}
-          className="bg-white text-xs md:text-xl lg:text-2xl mt-2 md:mt-6 md:w-44 md:h-10 hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)] "
+          className="bg-white text-xs md:text-lg mt-2 md:mt-6 md:w-44 md:h-10 "
+          onClick={() => router.push(`/game/${bannerId}/${slug(name)}`)}
         />
       </div>
       {children}

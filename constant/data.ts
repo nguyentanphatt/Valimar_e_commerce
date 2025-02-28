@@ -1,3 +1,5 @@
+import { balatro, finalfantasy, kingdom } from "./image";
+
 export const features1 = ["Access to all content"];
 export const features2 = [
   "Access to all content",
@@ -23,109 +25,128 @@ export const features4 = [
   "Refund in 14 days",
 ];
 
+export const bannerInfo = [
+  {
+    id: 3,
+    name: "Kingdom Come: Deliverance 2 ",
+    image: kingdom
+      
+  },
+  {
+    id: 46,
+    name: "Metaphor Re:Fantazio",
+    image: "https://valimar-image.s3.ap-southeast-2.amazonaws.com/metaphor.jpg",
+  },
+  {
+    id: 120,
+    name: "Balatro",
+    image: balatro
+  },
+  {
+    id: 48,
+    name: "Final Fantasy XVI",
+    image: finalfantasy
+      
+  },
+];
+
+export const navbarItems = [
+  { text: "Discovery", href: "/" },
+  { text: "Category", href: "/category" },
+  { text: "Subscription", href: "/subscription" },
+];
+
 export const subcategories = [
   {
     id: 1,
-    name: "New Release",
-    href: "/category/new-release",
-    description: "Explore the latest games released this month.",
-  },
-  {
-    id: 2,
-    name: "Upcoming",
-    href: "/category/upcoming",
-    description: "Discover upcoming games and get ready for the launch.",
-  },
-  {
-    id: 3,
-    name: "Best Sale",
-    href: "/category/best-sale",
-    description: "Find the best deals and discounts on popular games.",
-  },
-  {
-    id: 4,
     name: "Action",
     href: "/category/action",
     description: "Dive into the thrill of high-paced action games.",
   },
   {
-    id: 5,
+    id: 2,
     name: "Horror",
     href: "/category/horror",
     description:
       "Experience spine-chilling horror games that will keep you on edge.",
   },
   {
-    id: 6,
+    id: 3,
     name: "Adventure",
     href: "/category/adventure",
     description: "Embark on epic journeys and immersive adventures.",
   },
   {
-    id: 7,
+    id: 4,
     name: "JRPG",
     href: "/category/jrpg",
     description: "Enjoy the best of Japanese RPG games with deep storytelling.",
   },
   {
-    id: 8,
+    id: 5,
     name: "Music",
     href: "/category/music",
     description: "Play music-inspired games and test your rhythm skills.",
   },
   {
-    id: 9,
+    id: 6,
     name: "Puzzle",
     href: "/category/puzzle",
     description: "Challenge your mind with creative and engaging puzzle games.",
   },
   {
-    id: 10,
+    id: 7,
     name: "Space",
     href: "/category/space",
     description: "Explore the vast universe with exciting space-themed games.",
   },
   {
-    id: 11,
+    id: 8,
     name: "Simulation",
     href: "/category/simulation",
     description: "Experience realistic simulation games that mimic real life.",
   },
   {
-    id: 12,
+    id: 9,
     name: "Dating",
     href: "/category/dating",
     description: "Discover interactive dating simulation games.",
   },
   {
-    id: 13,
+    id: 10,
     name: "Fighting",
     href: "/category/fighting",
     description: "Engage in intense battles and showcase your fighting skills.",
   },
   {
-    id: 14,
+    id: 11,
     name: "Racing",
     href: "/category/racing",
     description: "Feel the adrenaline rush with high-speed racing games.",
   },
   {
-    id: 15,
+    id: 12,
     name: "Strategy",
     href: "/category/strategy",
     description: "Test your tactical skills with challenging strategy games.",
   },
   {
-    id: 16,
+    id: 13,
     name: "Turn-Base",
     href: "/category/turn-base",
     description: "Plan and conquer with classic turn-based gameplay.",
   },
   {
-    id: 17,
+    id: 14,
     name: "Building",
     href: "/category/building",
     description: "Create and manage your world with exciting building games.",
+  },
+  {
+    id: 15,
+    name: "Cute",
+    href: "/category/cute",
+    description: "Cute, lovely games could give you a relaxing time.",
   },
 ];
 

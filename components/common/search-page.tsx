@@ -1,8 +1,8 @@
 "use client";
-import Button from "@/components/ui/Button";
-import FilterMenu from "@/components/ui/FilterMenu";
-import GameCard from "@/components/ui/GameCard";
-import SearchBar from "@/components/ui/SearchBar";
+import Button from "@/components/ui/button";
+import FilterMenu from "@/components/ui/filter-menu";
+import GameCard from "@/components/ui/game-card";
+import SearchBar from "@/components/ui/search-bar";
 import { filterMenu01, filterMenu02 } from "@/constant/data";
 import { Menu } from "@/constant/image";
 import { GameProps } from "@/constant/type";
@@ -73,9 +73,11 @@ export default function SearchPages() {
       return filter.some(() => game.discountPercent > 0);
     }
     if (filter.length > 0) {
-      return filter.some((filter) =>
-        game.genre.toLowerCase().includes(filter.toLowerCase())
-      );
+      const gameGenres = game.genre
+        .toLowerCase()
+        .split(", ")
+        .map((g) => g.trim());
+      return filter.every((f) => gameGenres.includes(f.toLowerCase()));
     }
     return true;
   });
@@ -152,7 +154,7 @@ export default function SearchPages() {
             />
           ))}
           <div className="flex items-center justify-center">
-            {visibleItems < result.length && (
+            {visibleItems < filterGames.length && (
               <Button
                 size="sm"
                 text="See more"

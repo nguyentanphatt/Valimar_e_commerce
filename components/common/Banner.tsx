@@ -2,40 +2,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Button from "../ui/Button";
-
-const banner = [
-  {
-    id: 1,
-    name: "Silent Hill 2",
-    image:
-      "https://valimar-image.s3.ap-southeast-2.amazonaws.com/silenthill2.jpg",
-  },
-  {
-    id: 2,
-    name: "Metaphor Re:Fantazio",
-    image: "https://valimar-image.s3.ap-southeast-2.amazonaws.com/metaphor.jpg",
-  },
-  {
-    id: 3,
-    name: "Stalker 2",
-    image: "https://valimar-image.s3.ap-southeast-2.amazonaws.com/stalker2.jpg",
-  },
-  {
-    id: 4,
-    name: "Alan Wake 2",
-    image:
-      "https://valimar-image.s3.ap-southeast-2.amazonaws.com/alanwake2.jpg",
-  },
-];
+import Button from "../ui/button";
+import { bannerInfo } from "@/constant/data";
+import { BannerItemProps } from "@/constant/type";
+import { useRouter } from "next/navigation";
+import { slug } from "@/lib/slug";
 
 const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [xOffset, setXOffset] = useState("-50%");
+  const router = useRouter();
 
   useEffect(() => {
     const updateXOffset = () => {
-      if (window.innerWidth >= 768 ) {
+      if (window.innerWidth >= 768) {
         setXOffset("-140%");
       } else {
         setXOffset("-50%");
@@ -50,10 +30,10 @@ const Banner = () => {
   const handleSwap = (direction: string) => {
     if (direction === "left") {
       setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + banner.length) % banner.length
+        (prevIndex) => (prevIndex - 1 + bannerInfo.length) % bannerInfo.length
       );
     } else if (direction === "right") {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % banner.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerInfo.length);
     }
   };
 
@@ -84,15 +64,15 @@ const Banner = () => {
 
   const getPosition = (index: number) => {
     if (index === currentIndex) return "center";
-    if (index === (currentIndex - 1 + banner.length) % banner.length)
+    if (index === (currentIndex - 1 + bannerInfo.length) % bannerInfo.length)
       return "left";
-    if (index === (currentIndex + 1) % banner.length) return "right";
+    if (index === (currentIndex + 1) % bannerInfo.length) return "right";
     return "exit";
   };
 
   return (
-    <div className="relative flex items-center justify-center overflow-hidden h-40 md:h-80 lg:h-[500px]">
-      {banner.map((item, index) => (
+    <div className="relative flex items-center justify-center overflow-hidden mt-10 md:mt-0 h-48 md:h-80 lg:h-[500px]">
+      {bannerInfo.map((item: BannerItemProps, index: number) => (
         <motion.div
           key={item.id}
           className="absolute cursor-pointer"
@@ -111,6 +91,7 @@ const Banner = () => {
                 ? " w-[250px] h-[150px] md:w-[450px] md:h-[250px] lg:w-[850px] lg:h-[500px]"
                 : " w-[200px] h-[100px] md:w-[200px] md:h-[250px] lg:w-[320px] lg:h-[400px]"
             }`}
+            onClick={()=>router.push(`/game/${item.id}/${slug(item.name)}`)}
           >
             <Image
               src={item.image}
@@ -124,9 +105,17 @@ const Banner = () => {
             <div className="absolute md:bottom-2 lg:bottom-16 hidden md:flex md:flex-col ml-2 md:ml-5 md:gap-2 lg:gap-5 ">
               <p className=" text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold text-shadow-xl">
                 {item.name}{" "}
-                <span className="text-darkblue text-xl lg:text-3xl font-bold">NEW</span>
+                <span className="text-darkblue text-xl lg:text-3xl font-bold">
+                  NEW
+                </span>
               </p>
-              <Button size="md" text="View More" className="md:text-sm lg:w-28 md:h-7 lg:h-10 lg:text-lg" />
+              <Button
+                text="View More"
+                className="md:text-sm md:w-24 md:h-7"
+                onClick={() =>
+                  router.push(`/game/${item.id}/${slug(item.name)}`)
+                }
+              />
             </div>
           )}
         </motion.div>

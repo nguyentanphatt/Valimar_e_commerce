@@ -1,6 +1,12 @@
 import { StaticImageData } from "next/image";
 import { ReactNode } from "react";
 
+export interface BannerItemProps {
+  id: number,
+  name: string,
+  image: string | StaticImageData
+}
+
 export interface ItemCardProps {
   id: number;
   imageUrl: string | StaticImageData;
@@ -147,5 +153,6 @@ export interface CartDataProps {
   promocode?: string,
   numberOfItem?: number,
   newPlan?: string,
-  type: string
+  type: string,
+  digitalGameIds: number[]
 }

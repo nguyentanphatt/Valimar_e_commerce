@@ -59,14 +59,8 @@ const AccountDropdown = ({
           onAction={() => setIsOpen(false)}
           className="hidden md:block bg-black text-white font-medium rounded-br-lg rounded-bl-xl transition shadow-[0_0_10px_5px_rgba(0,208,255,0.2)]"
         >
-          <DropdownItem key="profile" className="hover:text-darkblue">
-            Profile
-          </DropdownItem>
           <DropdownItem key="settings" className="hover:text-darkblue">
             <Link href={`/cart/${userId}`}>Your Cart</Link>
-          </DropdownItem>
-          <DropdownItem key="cart" className="hover:text-darkblue">
-            Settings
           </DropdownItem>
           <DropdownItem
             key="logout"

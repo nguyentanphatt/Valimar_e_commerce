@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/button";
 import ItemPrice from "@/components/ui/ItemPrice";
 import { RemoveIcon } from "@/constant/image";
 import { CartItemProps, CartProps } from "@/constant/type";
@@ -19,8 +19,8 @@ const Page = () => {
   const [yourCart, setYourCart] = useState<CartProps>();
   const [total, setTotal] = useState<number>(0);
   const [userSubscription, setUserSubscription] = useState<string>("free");
-  const [promocode, setPromocode] = useState("")
-  const [deliveryLocation, setDeliveryLocation] = useState("")
+  const [promocode, setPromocode] = useState("");
+  const [deliveryLocation, setDeliveryLocation] = useState("");
 
   const getCart = async (id: number) => {
     try {
@@ -42,10 +42,10 @@ const Page = () => {
       const result = await removeFromCart(cartItemId);
       await getCart(userId);
       await getTotal(userId);
-      toast.success(result.message)
+      toast.success(result.message);
     } catch (error) {
       console.error(error);
-      toast.error("Error")
+      toast.error("Error");
     }
   };
 
@@ -77,15 +77,18 @@ const Page = () => {
 
   const finalTotal = () => {
     if (isNaN(total) || total === undefined || total === null) return 0;
-  
+
     const subDiscount = subscriptionDiscount(userSubscription);
     const discountedTotal = total - total * subDiscount;
-  
+
     return Math.max(discountedTotal, 0);
   };
-  
 
   const handleCheckout = () => {
+    if(!yourCart) return;
+    const digitalGameIds = yourCart.cartitem
+      .filter((item) => !item.physical)
+      .map((item) => item.gameId);
     const cartData = {
       id: yourCart?.id,
       userId: userId,
@@ -93,12 +96,13 @@ const Page = () => {
       deliveryLocation: deliveryLocation,
       amount: finalTotal().toFixed(2),
       numberOfItem: yourCart?.cartitem.length,
-      type: "cart"
-    }
+      type: "cart",
+      digitalGameIds
+    };
 
-    localStorage.setItem("cartData", JSON.stringify(cartData))
-    router.push(`/checkout`)
-  }
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+    router.push(`/checkout`);
+  };
 
   return (
     <div className="max-w-[1200px] mx-auto h-screen py-40 md:py-20 lg:py-24">
@@ -152,23 +156,28 @@ const Page = () => {
               placeholder="Enter your promo code..."
               className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
               value={promocode}
-              onChange={(e) => setPromocode(e.target.value)}            
+              onChange={(e) => setPromocode(e.target.value)}
             />
           </div>
-            <div className="flex flex-col gap-2 mt-3">
-              <p className="text-sm md:text-base lg:text-xl">Address:</p>
-              <input
-                type="text"
-                placeholder="Enter your address..."
-                className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
-                value={deliveryLocation}
-                onChange={(e) => setDeliveryLocation(e.target.value)}
-             />
-            </div>
+          <div className="flex flex-col gap-2 mt-3">
+            <p className="text-sm md:text-base lg:text-xl">Address:</p>
+            <input
+              type="text"
+              placeholder="Enter your address..."
+              className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
+              value={deliveryLocation}
+              onChange={(e) => setDeliveryLocation(e.target.value)}
+            />
+          </div>
           <div className="mt-3 flex flex-col gap-1">
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Subtotal:</span>
-              <span>${!isNaN(total) && total !== undefined ? total.toFixed(2) : "0.00"}</span>
+              <span>
+                $
+                {!isNaN(total) && total !== undefined
+                  ? total.toFixed(2)
+                  : "0.00"}
+              </span>
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Promo:</span>

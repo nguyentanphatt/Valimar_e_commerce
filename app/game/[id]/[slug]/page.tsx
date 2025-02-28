@@ -1,8 +1,8 @@
 "use client";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/button";
 import GameInfoSection from "@/components/ui/GameInfoSection";
 import ItemPrice from "@/components/ui/ItemPrice";
-import ItemSection from "@/components/ui/ItemSection";
+import ItemSection from "@/components/ui/item-section";
 import Label from "@/components/ui/Label";
 import { sampleReview } from "@/constant/data";
 import { ChevronLeft, ChevronRight, Heart } from "@/constant/image";

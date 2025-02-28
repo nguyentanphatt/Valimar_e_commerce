@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SubscriptionCard from "@/components/ui/SubscriptionCard";
+import SubscriptionCard from "@/components/ui/subscription-card";
 import { features1, features2, features3, features4 } from "@/constant/data";
 import { userDetail } from "@/services/userService";
 import { UserProps } from "@/constant/type";
@@ -20,9 +20,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
   useEffect(() => {
     getUserDetail(email);
   }, [email, getUserDetail]);
-
   const plans = ["free", "pathfinder", "trailblazer", "luminary"];
-
   const getButtonText = (
     currentPlan: string | undefined,
     planToCheck: string
@@ -38,28 +36,28 @@ export default function SubscriptionClient({ email }: { email: string }) {
     return "Upgrade Plan";
   };
   const getButtonConfig = (currentPlan: string | undefined, planToCheck: string) => {
-    if (!currentPlan) return { text: "Upgrade Plan", className: "bg-white" }; // Fallback
+    if (!currentPlan) return { text: "Upgrade Plan", className: "bg-white" };
   
     const currentIndex = plans.indexOf(currentPlan);
     const checkIndex = plans.indexOf(planToCheck);
   
     if (currentIndex === checkIndex) {
-      return { text: "Current Plan", className: "bg-darkblue" }; 
+      return { text: "Current Plan", className: "bg-darkblue hover pointer-events-none" }; 
     }
     if (currentIndex > checkIndex) {
-      return { text: "Already Own", className: "bg-darkblue/50" };
+      return { text: "Already Own", className: "bg-darkblue/50 pointer-events-none" };
     }
     
     return { text: "Upgrade Plan", className: "bg-white" };
   };
 
   return (
-    <div className=" py-40 md:py-24">
+    <div className=" py-40 md:py-28">
       <div className="flex flex-col items-center justify-center gap-2">
-        <p className="text-white text-xl md:text-3xl lg:text-4xl">
+        <p className="text-title">
           Upgrade Your Experience
         </p>
-        <p className="text-white/50 text-sm md:text-base lg:text-xl w-[60%] text-center">
+        <p className="subtext">
           Access to the world with better benefit and unlimited content
         </p>
       </div>

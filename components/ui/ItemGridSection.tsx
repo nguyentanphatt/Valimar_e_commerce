@@ -1,8 +1,8 @@
 "use client";
 import { ItemGridSectionProps } from "@/constant/type";
 import React, { useEffect, useState } from "react";
-import ItemCard from "./ItemCard";
-import Button from "./Button";
+import ItemCard from "./item-card";
+import Button from "./button";
 
 export default function ItemGridSection({ data }: ItemGridSectionProps) {
   const [rows, setRows] = useState(3);

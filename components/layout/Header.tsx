@@ -1,10 +1,10 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Image from "next/image";
-import SearchBar from '../ui/SearchBar';
+import SearchBar from '../ui/search-bar';
 import { AccountIcon, logo } from '@/constant/image';
 import Navbar from '../common/Navbar';
-import AccountSection from '../ui/AccountSection';
+import AccountSection from '../ui/account-section';
 
 const Header = () => {
   const [scrollingUp, setScrollingUp] = useState(true);

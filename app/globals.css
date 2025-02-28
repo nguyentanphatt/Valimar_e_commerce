@@ -86,6 +86,25 @@ body {
   @apply text-xs md:text-sm lg:text-base
 }
 
+.text-title {
+  @apply text-white text-xl md:text-3xl lg:text-4xl font-bold
+}
+
+.subtext {
+  @apply text-white/50 text-sm md:text-base lg:text-xl w-[60%] text-center mt-3
+}
+
+.underline-hover{
+  @apply absolute left-0 -bottom-1 md:-bottom-2 lg:-bottom-2 w-0 h-0.5 md:h-1 lg:h-1 bg-darkblue transition-all duration-300 group-hover:w-full
+}
+
+.hero-image {
+  @apply absolute hidden md:flex md:w-[300px] md:h-[150px] lg:w-[600px] lg:h-[300px]
+}
+
+.card-hover {
+  @apply transform transition-transform duration-200 ease-in-out md:hover:scale-105 md:hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]
+}
 
 
 @layer base {

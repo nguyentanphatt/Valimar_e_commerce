@@ -3,15 +3,12 @@ import { AccountIcon } from "@/constant/image";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
-import AccountDropdown from "./AccountDropdown";
+import AccountDropdown from "./account-dropdown";
 import { userImage } from "@/constant/image";
 import { twMerge } from "tailwind-merge";
 
 const AccountSection = async ({className} : {className?:string}) => {
   const session = await auth();
-  console.log(session);
-
-  
 
   if (session?.user) {
     return (
