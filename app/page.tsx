@@ -58,8 +58,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Suspense>
-      <div className="relative mt-40 md:mt-24 lg:mt-28">
+    <div className="relative mt-40 md:mt-24 lg:mt-28">
       <div className="relative flex flex-col items-center gap-10 md:h-[200px] lg:h-[400px] lg:py-10 md:overflow-x-hidden max-w-[1440px] mx-auto">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
@@ -83,9 +82,11 @@ export default function Home() {
           <Image src={per3_header} fill alt="per3" />
         </motion.div>
       </div>
-      <div className="absolute top-32 left-36 lg:top-[5%] lg:left-[25%] z-40 flex items-center justify-center md:w-[500px] lg:w-[50%]">
-        <SearchBar className="hidden md:flex" />
-      </div>
+      <Suspense>
+        <div className="absolute top-32 left-36 lg:top-[5%] lg:left-[25%] z-40 flex items-center justify-center md:w-[500px] lg:w-[50%]">
+          <SearchBar className="hidden md:flex" />
+        </div>
+      </Suspense>
       <Label title="Best for you" className="hidden md:flex" />
       <Banner />
       <AdvertismentBanner
@@ -129,6 +130,5 @@ export default function Home() {
         <ItemGridSection data={data} />
       </div>
     </div>
-    </Suspense>
   );
 }

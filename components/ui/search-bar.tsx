@@ -13,10 +13,10 @@ export default function SearchBar({ className }: { className?: string }) {
   const [result, setResult] = useState([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const query = searchParams.get("query");
   useEffect(() => {
-    setSearch(searchParams.get("query") || "");
-  }, [searchParams]);
+    setSearch("");
+  }, [query]);
 
   useEffect(() => {
     if (search.length < 1) {
