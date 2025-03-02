@@ -4,11 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "./button";
 import Link from "next/link";
-import {
-  userLogin,
-} from "@/lib/actions/auth";
-import { GoogleSignInButton } from "./GoogleSignInButton";
-import FacebookSignInButton from "./FacebookSignInButton";
+import { userLogin } from "@/lib/actions/auth";
+import { GoogleSignInButton } from "./google-signin-button";
+import FacebookSignInButton from "./facebook-signin-button";
 import { toast } from "sonner";
 
 export const SigninForm = () => {
@@ -20,11 +18,11 @@ export const SigninForm = () => {
     event.preventDefault();
     try {
       await userLogin(email, password);
-      toast.success("Login Success")
+      toast.success("Login Success");
       router.push("/");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        toast.error(error.message)
+        toast.error(error.message);
       } else {
         toast.error("An unknown error occurred");
       }
@@ -56,9 +54,9 @@ export const SigninForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="rounded-lg w-full outline-none text-black py-1 px-2"
           />
-          <div className="h-1">
-          </div>
-          <p className=" self-end text-darkblue md:text-sm lg:text-base">Forgot Password ?</p>
+          <p className=" self-end text-darkblue md:text-sm lg:text-base">
+            Forgot Password ?
+          </p>
           <Button
             text="LOG IN"
             className="w-full h-8 md:h-10 lg:h-12 bg-darkblue text-black md:text-base lg:text-lg hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]"

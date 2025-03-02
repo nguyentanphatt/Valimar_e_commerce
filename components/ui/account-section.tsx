@@ -1,15 +1,17 @@
 "use server";
-import { AccountIcon } from "@/constant/image";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
 import AccountDropdown from "./account-dropdown";
 import { userImage } from "@/constant/image";
 import { twMerge } from "tailwind-merge";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const AccountSection = async ({className} : {className?:string}) => {
   const session = await auth();
-
+  console.log(session);
+  
   if (session?.user) {
     return (
       <div>
@@ -33,7 +35,7 @@ const AccountSection = async ({className} : {className?:string}) => {
   return (
     <div>
       <Link href={"/signin"}>
-        <AccountIcon className={twMerge("hidden md:block md:size-7 lg:size-10 rounded-full",className)} />
+        <FontAwesomeIcon icon={faUser} className={twMerge("hidden md:block md:size-7 text-white",className)} />
       </Link>
     </div>
   );

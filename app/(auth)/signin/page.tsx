@@ -1,7 +1,7 @@
 "use server";
 
-import { SignOutButton } from "@/components/ui/SignOutButton";
-import { SigninForm } from "@/components/ui/SigninForm";
+import { SignOutButton } from "@/components/ui/signout-button";
+import { SigninForm } from "@/components/ui/signin-form";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
@@ -24,8 +24,8 @@ const page = async () => {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto ">
-      <div className="flex flex-col md:flex-row-reverse items-center justify-center max-h-screen py-2">
+    <div className="py-10 md:py-0 max-w-[1200px] mx-auto ">
+      <div className="flex flex-col md:flex-row-reverse items-center justify-center md:max-h-screen  py-2">
         <div className="relative md:w-1/2 md:h-screen">
           <Image
             src={signinImg}

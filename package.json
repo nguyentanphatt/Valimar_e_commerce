@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroui/checkbox": "^2.3.9",
     "@heroui/radio": "^2.3.9",
     "@heroui/system": "^2.4.7",
     "@heroui/theme": "^2.4.6",
     "@nextui-org/react": "^2.6.11",
     "@prisma/client": "^6.3.1",
+    "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-radio-group": "^1.2.3",
     "@stripe/react-stripe-js": "^3.1.1",
     "@stripe/stripe-js": "^5.7.0",

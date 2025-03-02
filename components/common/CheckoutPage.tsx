@@ -88,7 +88,7 @@ const CheckoutPage = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-2 rounded-md mt-40 lg:mt-52"
+      className="bg-white p-2 rounded-md mt-10"
     >
       {clientSecret && <PaymentElement />}
 

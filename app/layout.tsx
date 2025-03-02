@@ -6,7 +6,7 @@ import Footer from "@/components/layout/footer";
 import Wrapper from "@/components/common/Wrapper";
 import AccountSection from "@/components/ui/account-section";
 import { Toaster } from "@/components/ui/sonner";
-import PhoneNavbar from "@/components/common/PhoneNavbar";
+import PhoneNavbar from "@/components/common/phone-navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

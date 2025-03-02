@@ -5,45 +5,58 @@ import { useState } from "react";
 import Button from "./button";
 import Link from "next/link";
 import { userSignUp } from "@/services/userService";
-import { GoogleSignInButton } from "./GoogleSignInButton";
-import FacebookSignInButton from "./FacebookSignInButton";
-
-
+import { GoogleSignInButton } from "./google-signin-button";
+import FacebookSignInButton from "./facebook-signin-button";
+import { toast } from "sonner";
+import { Checkbox } from "./checkbox";
 
 export const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isSelected, setIsSelected] = useState(false)
+  const [isSelected, setIsSelected] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError("");
-    console.log(isSelected)
-    if (confirmPassword !== password) {
-      setError("Confirm Password is not the same");
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d!@#$%^&*()\-_=+{};:,<.>.]{8,12}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error("Password should have 8-12 characters, at least 1 number, 1 uppercase letter, and 1 special character");
       return;
-    } else if(!isSelected){
-      setError("Please agree to our terms and conditions ")
+    }
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid Email! Please enter a correct email format.");
+      return;
+    }
+    if (confirmPassword !== password) {
+      toast.error("Confirm Password is not the same");
+      return;
+    }
+    if (!isSelected) {
+      toast.error("Please agree to our terms and conditions ");
       return;
     }
 
     try {
       await userSignUp(name, email, password);
+      toast.success("Success create account");
       router.push("/signin");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        const axiosError = error as { response?: { data?: { error?: string } } };
+        const axiosError = error as {
+          response?: { data?: { error?: string } };
+        };
         if (axiosError.response && axiosError.response.data?.error) {
-          setError(axiosError.response.data.error);
+          toast.error(axiosError.response.data.error);
         } else {
-          setError(error.message || "An unexpected error occurred. Please try again.");
+          toast.error(
+            error.message || "An unexpected error occurred. Please try again."
+          );
         }
       } else {
-        setError("An unknown error occurred.");
+        toast.error("An unknown error occurred.");
       }
     }
   };
@@ -92,16 +105,15 @@ export const SignupForm = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="rounded-lg w-full outline-none text-black py-1 px-2"
           />
-          <div className="h-3">
-          {error && <p className="text-red-600 w-full md:text-sm lg:text-base">{error || " "}</p>}
-          </div>
-          <div>
-            <input type="checkbox" checked={isSelected} onChange={()=>setIsSelected(!isSelected)} />
+          <div className="flex gap-2 items-start">
+            <Checkbox
+              checked={isSelected}
+              onCheckedChange={(checked) => setIsSelected(checked === true)}
+              className="mt-1"
+            />
             <span className="text-white md:text-sm lg:text-base">
-                i have read and agree with Terms of Service and our Private
-                Policy
-              </span>
-              
+              I have read and agree with Terms of Service and our Private Policy
+            </span>
           </div>
           <Button
             text="SIGN UP"

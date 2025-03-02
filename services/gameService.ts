@@ -70,3 +70,14 @@ export const generateGameKey = async(id: number) => {
     throw error
   }
 }
+
+export const checkPromocode = async(promo:string) => {
+  try {
+    const response = await api.post('/promocode', {
+      promo
+    })
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}

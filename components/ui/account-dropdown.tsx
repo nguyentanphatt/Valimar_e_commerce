@@ -31,7 +31,7 @@ const AccountDropdown = ({
 
   useEffect(() => {
     getUserId(user.email)
-  },[])
+  },[user.email])
 
   const handleOpen = () => {
     setIsOpen(!isOpen);

@@ -11,6 +11,7 @@ import signinImgLg from "@/public/assets/image/signinlg.png"
 import signinImg from '@/public/assets/image/signin.png'
 import signupImgLg from '@/public/assets/image/signuplg.png'
 import signupImg from '@/public/assets/image/signup.png'
+import noImage from '@/public/assets/image/no-image.jpg'
 
 
 import Arrowright from '@/public/assets/icon/arrow-up-right.svg'
@@ -24,9 +25,6 @@ import GoogleIcon from '@/public/assets/icon/googleicon.svg'
 import FacebookIcon from '@/public/assets/icon/facebookicon.svg'
 import AccountIcon from "@/public/assets/icon/account.svg";
 import RemoveIcon from '@/public/assets/icon/remove.svg'
-import HomeIcon from '@/public/assets/icon/home.svg'
-import NotificationIcon from '@/public/assets/icon/notification.svg'
-import CartIcon from '@/public/assets/icon/cart.svg'
 import CheckoutSuccessIcon from '@/public/assets/icon/paymentcheck.svg'
 
 export {
@@ -41,6 +39,7 @@ export {
     signinImgLg,
     signupImg,
     signupImgLg,
+    noImage,
     Arrowright,
     logo,
     Star,
@@ -53,8 +52,5 @@ export {
     FacebookIcon,
     AccountIcon,
     RemoveIcon,
-    HomeIcon,
-    NotificationIcon,
-    CartIcon,
     CheckoutSuccessIcon
 }

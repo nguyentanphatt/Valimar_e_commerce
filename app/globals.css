@@ -106,6 +106,10 @@ body {
   @apply transform transition-transform duration-200 ease-in-out md:hover:scale-105 md:hover:shadow-[0_0_10px_5px_rgba(0,208,255,0.5)]
 }
 
+.chevron-button {
+  @apply absolute top-1/2 -translate-y-1/2 bg-white/50 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity
+}
+
 
 @layer base {
   * {

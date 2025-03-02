@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import ItemPrice from "./ItemPrice";
+import ItemPrice from "./item-price";
 import { slug } from "@/lib/slug";
 
 export default function ItemCard({

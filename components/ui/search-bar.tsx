@@ -15,8 +15,8 @@ export default function SearchBar({ className }: { className?: string }) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    setSearch("");
-  }, [searchParams.get("query")]);
+    setSearch(searchParams.get("query") || "");
+  }, [searchParams]);
 
   useEffect(() => {
     if (search.length < 1) {

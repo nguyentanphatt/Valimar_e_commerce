@@ -1,10 +1,12 @@
 "use client";
 import Button from "@/components/ui/button";
-import ItemPrice from "@/components/ui/ItemPrice";
+import ItemPrice from "@/components/ui/item-price";
 import { RemoveIcon } from "@/constant/image";
 import { CartItemProps, CartProps } from "@/constant/type";
 import { getUserSubcription } from "@/lib/actions/auth";
 import { fetchCart, removeFromCart, totalCart } from "@/services/cartService";
+import { checkPromocode } from "@/services/gameService";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -13,13 +15,12 @@ import { toast } from "sonner";
 const Page = () => {
   const { id } = useParams();
   const userId = id ? parseInt(id as string, 10) : 0;
-
   const router = useRouter();
-
   const [yourCart, setYourCart] = useState<CartProps>();
   const [total, setTotal] = useState<number>(0);
   const [userSubscription, setUserSubscription] = useState<string>("free");
   const [promocode, setPromocode] = useState("");
+  const [promocodeValue, setPromocodeValue] = useState("");
   const [deliveryLocation, setDeliveryLocation] = useState("");
 
   const getCart = async (id: number) => {
@@ -36,6 +37,24 @@ const Page = () => {
     getTotal(userId);
     subscription();
   }, [userId]);
+
+
+
+  const handleCheckPromocode = async (promo: string) => {
+    try {
+      if(promo.trim() !== " ") {
+        const result = await checkPromocode(promo);
+        setPromocodeValue(result.percent);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.error);
+        
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
+  };
 
   const removeItemFromCart = async (cartItemId: number) => {
     try {
@@ -54,7 +73,7 @@ const Page = () => {
       const response = await totalCart(userId);
       setTotal(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -62,9 +81,8 @@ const Page = () => {
     try {
       const response = await getUserSubcription();
       setUserSubscription(response.plan);
-      console.log("sub", response.plan);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -85,7 +103,7 @@ const Page = () => {
   };
 
   const handleCheckout = () => {
-    if(!yourCart) return;
+    if (!yourCart) return;
     const digitalGameIds = yourCart.cartitem
       .filter((item) => !item.physical)
       .map((item) => item.gameId);
@@ -97,12 +115,16 @@ const Page = () => {
       amount: finalTotal().toFixed(2),
       numberOfItem: yourCart?.cartitem.length,
       type: "cart",
-      digitalGameIds
+      digitalGameIds,
     };
 
     localStorage.setItem("cartData", JSON.stringify(cartData));
     router.push(`/checkout`);
   };
+  const hasPhysical = (cart: CartProps) => {
+    return cart.cartitem.some((item) => item.physical === true);
+  };
+  console.log(promocodeValue);
 
   return (
     <div className="max-w-[1200px] mx-auto h-screen py-40 md:py-20 lg:py-24">
@@ -122,14 +144,18 @@ const Page = () => {
                   alt={item.game.name}
                   width={300}
                   height={300}
-                  className="w-14 lg:w-20 h-14 lg:h-20 object-cover"
+                  className="w-20 lg:w-32 h-14 md:h-20 lg:h-24 object-cover"
                 />
-                <div className="flex flex-col gap-0 justify-between text-sm md:text-base lg:text-xl text-white font-medium">
+                <div className="flex flex-col justify-between text-sm md:text-base lg:text-xl text-white font-medium">
                   <h1 className="">{item.game.name}</h1>
                   {item.physical ? (
-                    <p className="text-sm text-white/80">Type: Physical</p>
+                    <p className="text-xs md:text-sm text-white/80">
+                      Type: Physical
+                    </p>
                   ) : (
-                    <p className="text-sm text-white/80">Type: Digital</p>
+                    <p className="text-xs md:text-sm text-white/80">
+                      Type: Digital
+                    </p>
                   )}
                   <ItemPrice
                     price={item.game.price}
@@ -151,24 +177,29 @@ const Page = () => {
         <div className="py-3 mt-5 bg-white/20 mx-3 md:mx-0 md:mr-3 md:mt-3 px-5 text-white rounded md:w-[40%]">
           <div className="flex flex-col gap-2">
             <p className="text-sm md:text-base lg:text-xl">Promo code:</p>
-            <input
-              type="text"
-              placeholder="Enter your promo code..."
-              className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
-              value={promocode}
-              onChange={(e) => setPromocode(e.target.value)}
-            />
+            <div className="flex gap-2 lg:gap-8">
+              <input
+                type="text"
+                placeholder="Enter your promo code..."
+                className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
+                value={promocode}
+                onChange={(e) => setPromocode(e.target.value)}
+              />
+              <Button className="w-20 lg:w-32 lg:h-10 text-black text-sm" text="Check" onClick={() => handleCheckPromocode(promocode)}/>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 mt-3">
-            <p className="text-sm md:text-base lg:text-xl">Address:</p>
-            <input
-              type="text"
-              placeholder="Enter your address..."
-              className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
-              value={deliveryLocation}
-              onChange={(e) => setDeliveryLocation(e.target.value)}
-            />
-          </div>
+          {yourCart && hasPhysical(yourCart) && (
+            <div className="flex flex-col gap-2 mt-3">
+              <p className="text-sm md:text-base lg:text-xl">Address:</p>
+              <input
+                type="text"
+                placeholder="Enter your address..."
+                className="w-full bg-white text-black text-sm lg:text-base p-1 lg:p-2 outline-none rounded-sm"
+                value={deliveryLocation}
+                onChange={(e) => setDeliveryLocation(e.target.value)}
+              />
+            </div>
+          )}
           <div className="mt-3 flex flex-col gap-1">
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Subtotal:</span>
@@ -181,17 +212,17 @@ const Page = () => {
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Promo:</span>
-              <span>$0.0</span>
+              <span>${(parseFloat(promocodeValue) || 0).toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Subscription:</span>
               <span>
-                ${userSubscription ? subscriptionDiscount(userSubscription) : 0}
+                ${(userSubscription ? subscriptionDiscount(userSubscription) : 0).toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between text-sm md:text-base lg:text-xl">
               <span>Transfer Fee:</span>
-              <span>$0.0</span>
+              <span>$0.00</span>
             </div>
             <div className="flex justify-between font-bold text-lg lg:text-2xl my-2">
               <span>Total:</span>

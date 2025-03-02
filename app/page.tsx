@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimate } from "framer-motion";
 import SearchBar from "@/components/ui/search-bar";
 
 import AdvertismentBanner from "@/components/common/advertisment-banner";
-import Label from "@/components/ui/Label";
+import Label from "@/components/ui/label";
 import ItemSection from "@/components/ui/item-section";
 import {
   hollow_banner,
@@ -18,7 +18,7 @@ import {
   getGameNewrelease,
   getGameWithDiscount,
 } from "@/services/gameService";
-import ItemGridSection from "@/components/ui/ItemGridSection";
+import ItemGridSection from "@/components/ui/item-grid-section";
 import Banner from "@/components/common/banner";
 
 export default function Home() {
@@ -58,7 +58,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative mt-40 md:mt-24 lg:mt-28">
+    <Suspense>
+      <div className="relative mt-40 md:mt-24 lg:mt-28">
       <div className="relative flex flex-col items-center gap-10 md:h-[200px] lg:h-[400px] lg:py-10 md:overflow-x-hidden max-w-[1440px] mx-auto">
         <p className="z-20 text-white font-bold text-xl md:text-3xl lg:text-5xl text-center py-2 max-w-60 md:max-w-96 lg:max-w-[580px]">
           Discovery new game and get{" "}
@@ -128,5 +129,6 @@ export default function Home() {
         <ItemGridSection data={data} />
       </div>
     </div>
+    </Suspense>
   );
 }

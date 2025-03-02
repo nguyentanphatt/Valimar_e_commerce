@@ -1,5 +1,5 @@
 "use client";
-import Label from "@/components/ui/Label";
+import Label from "@/components/ui/label";
 import { filterMenu01, filterMenu02, subcategories } from "@/constant/data";
 import Image from "next/image";
 import { useParams } from "next/navigation";

@@ -1,11 +1,10 @@
 "use client";
 import Button from "@/components/ui/button";
-import GameInfoSection from "@/components/ui/GameInfoSection";
-import ItemPrice from "@/components/ui/ItemPrice";
+import GameInfoSection from "@/components/ui/game-info-section";
+import ItemPrice from "@/components/ui/item-price";
 import ItemSection from "@/components/ui/item-section";
-import Label from "@/components/ui/Label";
-import { sampleReview } from "@/constant/data";
-import { ChevronLeft, ChevronRight, Heart } from "@/constant/image";
+import Label from "@/components/ui/label";
+import { ChevronLeft, ChevronRight, Heart, noImage } from "@/constant/image";
 import { GameProps } from "@/constant/type";
 import { addItemToCart } from "@/lib/actions/auth";
 import { getGameById, getGameRelevantByGenre } from "@/services/gameService";
@@ -14,6 +13,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function Page() {
   const { id } = useParams();
@@ -75,44 +75,35 @@ export default function Page() {
   const handleAddToCart = async (gameId: number, physical: boolean) => {
     try {
       const result = await addItemToCart(gameId, physical);
-      if(result.message.includes("Game already in cart") || result.message.includes("Failed to add item to cart")){
-        toast.error(result.message)
+      if (
+        result.message.includes("Game already in cart") ||
+        result.message.includes("Failed to add item to cart")
+      ) {
+        toast.error(result.message);
       } else {
-        toast.success(result.message)
+        toast.success(result.message);
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong!")
+      console.log(error);
+      toast.error("Invalid user or expired token, please login again");
     }
   };
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPhysical(event.target.value === "physical");
-  };
-
   return (
-    <div className="relative py-20 lg:py-28">
+    <div className="relative pt-32">
       <div className="flex flex-col items-center justify-center">
         <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-5 items-center justify-center md:px-7 py-5 max-w-[1200px]">
           <div className="relative w-[90%] h-[250px] mb-5 md:mb-0 md:h-[80%] lg:h-[100%] md:w-[100%] md:col-span-1 group">
             <Image
-              src={images[currentIndex] || "/default-image.png"}
+              src={images[currentIndex] || noImage}
               alt="Game Image"
               layout="fill"
               className="rounded"
             />
-
-            <button
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/50 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={prevImage}
-            >
+            <button className="chevron-button left-2" onClick={prevImage}>
               <ChevronLeft className="text-white size-6 bg-transparent" />
             </button>
-
-            <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/50 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={nextImage}
-            >
+            <button className="chevron-button right-2" onClick={nextImage}>
               <ChevronRight className="text-white size-6 bg-transparent" />
             </button>
           </div>
@@ -124,7 +115,9 @@ export default function Page() {
                 separator: "text-white/40",
               }}
             >
-              <BreadcrumbItem href="/category/action">
+              <BreadcrumbItem
+                href={`/category/${firstGenreOfGame.toLowerCase()}`}
+              >
                 {firstGenreOfGame}
               </BreadcrumbItem>
               <BreadcrumbItem>{game?.name}</BreadcrumbItem>
@@ -137,7 +130,7 @@ export default function Page() {
               <Heart className="size-4 md:size-6 lg:size-8" />
             </div>
             <p className="text-detail text-white/50">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
+              Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industrys standard dummy text
               ever since the 1500s,
             </p>
@@ -152,44 +145,43 @@ export default function Page() {
               {game?.physical && (
                 <div className="flex items-center gap-2 text-detail">
                   <p className="text-white/50">Type:</p>
-                  <div className="flex items-center gap-2 text-white">
-                    <div className="flex gap-2 items-center">
-                      <input
-                        type="radio"
-                        name="purchaseType"
-                        value="digital"
-                        checked={!isPhysical}
-                        onChange={handleOptionChange}
-                        className="size-4"
-                      />
-                      <p>Digital</p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <input
-                        type="radio"
-                        name="purchaseType"
-                        value="physical"
-                        checked={isPhysical}
-                        onChange={handleOptionChange}
-                        className="size-4"
-                      />
-                      <p>Physical</p>
-                    </div>
-                  </div>
+                  <RadioGroup
+                        value={isPhysical ? "physical" : "digital"}
+                        onValueChange={(value) =>
+                          setIsPhysical(value === "physical")
+                        }
+                        className="flex flex-row text-white"
+                      >
+                        <div className="flex items-center  space-x-2">
+                          <RadioGroupItem
+                            value="digital"
+                            id="r1"
+                            className="border-white"
+                          />
+                          <p>Digital</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value="physical"
+                            id="r2"
+                            className="border-white"
+                          />
+                          <p>Physical</p>
+                        </div>
+                      </RadioGroup>
                 </div>
               )}
             </div>
             <div className="flex md:flex-col items-center md:items-start justify-between gap-0 md:gap-5">
-            <ItemPrice
-            price={game?.price || 0}
-            discountPrice={game?.discountPrice || 0}
-            discountPercent={game?.discountPercent || 0}
-            discountPriceClassname="text-xl md:text-2xl lg:text-3xl"
-            priceClassname="text-lg md:text-xl lg:text-2xl -translate-y-1"
-            discountPercentClassname="h-5 md:h-6 lg:h-7"
-          />
+              <ItemPrice
+                price={game?.price || 0}
+                discountPrice={game?.discountPrice || 0}
+                discountPercent={game?.discountPercent || 0}
+                discountPriceClassname="text-xl md:text-2xl lg:text-3xl"
+                priceClassname="text-lg md:text-xl lg:text-2xl -translate-y-1"
+                discountPercentClassname="h-5 md:h-6 lg:h-7"
+              />
               <Button
-                size="sm"
                 text="Add to Cart"
                 className="w-32 h-7 md:w-full md:h-10 md:text-base"
                 onClick={() => game?.id && handleAddToCart(game.id, isPhysical)}
@@ -197,12 +189,12 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:grid md:grid-cols-3 md:gap-5 md:px-7 items-center justify-center max-w-[1200px]">
+        <div className="flex flex-col md:grid md:grid-cols-3 md:gap-5 md:px-7 pb-4 items-center justify-center max-w-[1200px]">
           <GameInfoSection
             title="Game Description"
             className="md:col-span-3 md:w-full"
           >
-            <p className="text-white/50 text-detail text-justify">
+            <p className="text-white/50 text-detail text-justify md:px-2 lg:px-7">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industrys standard dummy text
               ever since the 1500s. Lorem Ipsum is simply dummy text of the
@@ -302,41 +294,6 @@ export default function Page() {
                 </div>
               </div>
             ))}
-          </GameInfoSection>
-          <GameInfoSection title="Reviews" className="md:col-span-3 md:w-full">
-            {sampleReview.map((reviews) => (
-              <div
-                className="flex items-center gap-5 hover:bg-white/10 hover:rounded-lg p-3 w-full"
-                key={reviews.id}
-              >
-                <Image
-                  src={reviews.image}
-                  alt="Reviews Image"
-                  width={100}
-                  height={100}
-                  className="rounded-full w-[50px] h-[50px]"
-                />
-                <div className="flex flex-col ">
-                  <h1 className="text-white text-base">
-                    {reviews.name}{" "}
-                    <span className="text-white/30 text-sm">
-                      post in {reviews.date}
-                    </span>
-                  </h1>
-                  <p className="text-white/80 text-justify text-sm truncate w-[200px] md:text-wrap md:w-full">
-                    {reviews.content}
-                  </p>
-                </div>
-              </div>
-            ))}
-            <div className="bg-white/30 rounded-lg p-2 flex items-center gap-2 w-full my-2">
-              <div className="w-[300px] md:w-full">
-                <input
-                  placeholder="Comment"
-                  className="bg-white rounded-lg h-7 text-sm px-1 w-full outline-none"
-                />
-              </div>
-            </div>
           </GameInfoSection>
         </div>
       </div>

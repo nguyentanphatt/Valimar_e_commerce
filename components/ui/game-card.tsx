@@ -1,7 +1,7 @@
 import { GameProps } from "@/constant/type";
 import Image from "next/image";
 import Link from "next/link";
-import ItemPrice from "./ItemPrice";
+import ItemPrice from "./item-price";
 
 export default function GameCard({
   name,

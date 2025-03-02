@@ -70,43 +70,15 @@ export const userLogin = async (email: string, password: string) => {
   }
 };
 
-
-/* export const addItemToCart = async (gameId: number, physical: boolean) => {
-  const user = await getUser();
-  const userId = user?.id ? parseInt(user.id as string, 10) : 0;
-
-  try {
-    const response = await addToCart(userId, gameId, physical);
-
-    if (!response || !response.success) {
-      throw new Error(response?.message || "Failed to add item to cart");
-    }
-
-    return { success: true, message: response.message || "Item added to cart!" };
-  } catch (error: any) {
-    console.error("Add to Cart Error:", error);
-
-    return {
-      success: false,
-      message: error?.response?.data?.message || "Something went wrong!",
-    };
-  }
-}; */
-
 export const addItemToCart = async (
   gameId: number,
   physical: boolean
 ): Promise<{ success: boolean; message: string }> => {
   const session = await getUser();
   const userEmail = session?.user?.email
-
   const userInfo = await userDetail(userEmail || "")
-
-  console.log(userInfo);
+  console.log("userInfo", userInfo);
   
-
-  //const userId = session?.user?.id ? parseInt(session.user.id as string, 10) : 0;
-
   if (!userInfo.id) {
     return { success: false, message: "User not found" };
   }
@@ -132,14 +104,14 @@ export const addItemToCart = async (
     const errorMessage =
       error instanceof Error
         ? error.message
-        : "Something went wrong!";
-
+        : "Invalid user or expired token";
     return {
       success: false,
       message: errorMessage,
     };
   }
 };
+
 
 
 export const getUserSubcription = async () => {

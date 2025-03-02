@@ -8,18 +8,19 @@ import { UserProps } from "@/constant/type";
 export default function SubscriptionClient({ email }: { email: string }) {
   const [user, setUser] = useState<UserProps>();
 
-  const getUserDetail = async (email: string) => {
-    try {
-      const userdetail = await userDetail(email);
-      setUser(userdetail);
-    } catch (error) {
-      console.error("Failed to get user detail", error);
-    }
-  };
+  
 
   useEffect(() => {
+    const getUserDetail = async (email: string) => {
+      try {
+        const userdetail = await userDetail(email);
+        setUser(userdetail);
+      } catch (error) {
+        console.error("Failed to get user detail", error);
+      }
+    };
     getUserDetail(email);
-  }, [email, getUserDetail]);
+  }, [email]);
   const plans = ["free", "pathfinder", "trailblazer", "luminary"];
   const getButtonText = (
     currentPlan: string | undefined,

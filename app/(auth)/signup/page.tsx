@@ -1,5 +1,5 @@
 
-import { SignupForm } from "@/components/ui/SignupForm";
+import { SignupForm } from "@/components/ui/signup-form";
 import {signupImg, signupImgLg } from "@/constant/image";
 import Image from "next/image";
 import React from "react";
