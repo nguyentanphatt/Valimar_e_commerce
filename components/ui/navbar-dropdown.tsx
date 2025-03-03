@@ -41,19 +41,19 @@ const NavbarDropdown = ({text} : {text:string}) => {
         <DropdownMenu
           aria-label="Categories"
           variant="flat"
-          className="bg-black text-white font-medium rounded-br-lg rounded-bl-xl transition shadow-[0_0_10px_5px_rgba(0,208,255,0.2)]"
+          className=" bg-black text-white font-medium rounded-br-lg rounded-bl-xl transition shadow-[0_0_10px_5px_rgba(0,208,255,0.2)]"
           onAction={() => setIsCategoryActive(false)}
         >
-          <DropdownItem key="grid-menu" className="pl-6 pr-5">
-            <div className="grid grid-cols-3 md:w-[350px] lg:w-[430px] gap-5">
+          <DropdownItem key="grid-menu" className="pl-6 pr-5 ">
+            <div className="grid grid-cols-3 md:w-[350px] lg:w-[450px] gap-5">
               <div className="flex flex-col items-center justify-center">
-                <h3 className="font-bold text-base md:text-lg text-darkblue mb-1">
+                <h3 className="font-bold text-lg text-darkblue mb-1">
                   Gerne
                 </h3>
                 {subcategories.slice(0, 5).map((sub, index) => (
                   <p key={index} className="mb-2">
                     <Link href={sub.href}>
-                      <span className="text-sm md:text-base hover:text-darkblue transition-all duration-200">
+                      <span className="text-lg hover:text-darkblue transition-all duration-200">
                         {sub.name}
                       </span>
                     </Link>
@@ -65,7 +65,7 @@ const NavbarDropdown = ({text} : {text:string}) => {
                 {subcategories.slice(5, 10).map((sub, index) => (
                   <p key={index} className="mb-2">
                     <Link href={sub.href}>
-                      <span className="text-sm md:text-base hover:text-darkblue transition-all duration-200">
+                      <span className="text-lg hover:text-darkblue transition-all duration-200">
                         {sub.name}
                       </span>
                     </Link>
@@ -77,7 +77,7 @@ const NavbarDropdown = ({text} : {text:string}) => {
                 {subcategories.slice(10, 15).map((sub, index) => (
                   <p key={index} className="mb-2">
                     <Link href={sub.href}>
-                      <span className="text-sm md:text-base hover:text-darkblue transition-all duration-200">
+                      <span className="text-lg hover:text-darkblue transition-all duration-200">
                         {sub.name}
                       </span>
                     </Link>

@@ -35,7 +35,7 @@ export default function AdvertismentBanner({
         </p>
         <Button
           text={buttonText}
-          className="bg-white text-xs md:text-lg mt-2 md:mt-6 md:w-44 md:h-10 "
+          className="bg-white text-xs md:text-lg mt-2 md:mt-6 md:w-44 w-28 h-7 md:h-10 "
           onClick={() => router.push(`/game/${bannerId}/${slug(name)}`)}
         />
       </div>

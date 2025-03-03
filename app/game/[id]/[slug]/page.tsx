@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Label from "@/components/ui/label";
 import Button from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Page() {
   const { id } = useParams();
@@ -136,7 +137,15 @@ export default function Page() {
             </p>
             <div className="flex flex-col gap-3">
               <p className="text-detail text-white">
-                <span className="text-white/50">Genre:</span> {game?.genre}
+                <span className="text-white/50">Genre:</span>{" "}
+                {game?.genre.split(", ").map((genre, index) => (
+                  <Link key={index} href={`/category/${genre.toLowerCase()}`} passHref className="">
+                    <span className="hover:text-darkblue">
+                      {genre}
+                    </span>
+                    {index < game?.genre.split(", ").length - 1 && ", "}
+                  </Link>
+                ))}
               </p>
               <p className="text-detail text-white">
                 <span className="text-white/50">Developer:</span>{" "}

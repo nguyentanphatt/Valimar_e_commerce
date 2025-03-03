@@ -91,7 +91,6 @@ const Banner = () => {
                 ? " w-[250px] h-[150px] md:w-[450px] md:h-[250px] lg:w-[850px] lg:h-[500px]"
                 : " w-[200px] h-[100px] md:w-[200px] md:h-[250px] lg:w-[320px] lg:h-[400px]"
             }`}
-            onClick={()=>router.push(`/game/${item.id}/${slug(item.name)}`)}
           >
             <Image
               src={item.image}
@@ -102,16 +101,16 @@ const Banner = () => {
             />
           </div>
           {getPosition(index) === "center" && (
-            <div className="absolute md:bottom-2 lg:bottom-16 hidden md:flex md:flex-col ml-2 md:ml-5 md:gap-2 lg:gap-5 ">
-              <p className=" text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold text-shadow-xl">
+            <div className="absolute bottom-2 lg:bottom-16 flex md:flex-col ml-2 md:ml-5 md:gap-2 lg:gap-5 ">
+              <p className=" hidden md:block text-white text-sm md:text-3xl lg:text-4xl md:gap-2 md:font-bold text-shadow-xl">
                 {item.name}{" "}
-                <span className="text-darkblue text-xl lg:text-3xl font-bold">
+                <span className="text-darkblue text-xs md:text-xl lg:text-3xl font-bold">
                   NEW
                 </span>
               </p>
               <Button
                 text="View More"
-                className="md:text-sm md:w-24 md:h-7"
+                className="text-xs w-16 h-5 md:text-sm md:w-24 md:h-7"
                 onClick={() =>
                   router.push(`/game/${item.id}/${slug(item.name)}`)
                 }
