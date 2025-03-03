@@ -77,7 +77,6 @@ export const addItemToCart = async (
   const session = await getUser();
   const userEmail = session?.user?.email
   const userInfo = await userDetail(userEmail || "")
-  console.log("userInfo", userInfo);
   
   if (!userInfo.id) {
     return { success: false, message: "User not found" };

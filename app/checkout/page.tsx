@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import convertToSubcurrency from "@/lib/convertToSbcurrency";
-import CheckoutPage from "@/components/common/CheckoutPage";
+import CheckoutPage from "@/components/common/checkout-page";
 import { CartDataProps } from "@/constant/type";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {

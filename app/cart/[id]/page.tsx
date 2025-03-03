@@ -38,8 +38,6 @@ const Page = () => {
     subscription();
   }, [userId]);
 
-
-
   const handleCheckPromocode = async (promo: string) => {
     try {
       if(promo.trim() !== " ") {

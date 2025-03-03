@@ -7,6 +7,7 @@ import { GameProps } from "@/constant/type";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { slug } from "@/lib/slug";
 
 export default function SearchBar({ className }: { className?: string }) {
   const [search, setSearch] = useState("");
@@ -75,7 +76,7 @@ export default function SearchBar({ className }: { className?: string }) {
       {result.length > 0 && (
         <div className="absolute h-auto max-h-[300px] md:max-h-[400px] lg:max-h-[500px] w-full overflow-y-auto scrollbar-hide p-2 md:mt-2 bg-gray-700 z-40 rounded-lg transition ease-in-out">
           {result.map((game: GameProps) => (
-            <Link href={`/game/${game.id}`} key={game.id} onClick={() => setSearch("")}>
+            <Link href={`/game/${game.id}/${slug(game.name)}`} key={game.id} onClick={() => setSearch("")}>
               <div className="flex flex-col ">
                 <div className="flex items-center gap-2 py-3 hover:bg-white/20">
                   <Image
