@@ -1,9 +1,7 @@
 "use client";
-import Button from "@/components/ui/button";
 import GameInfoSection from "@/components/ui/game-info-section";
 import ItemPrice from "@/components/ui/item-price";
 import ItemSection from "@/components/ui/item-section";
-import Label from "@/components/ui/label";
 import { ChevronLeft, ChevronRight, Heart, noImage } from "@/constant/image";
 import { GameProps } from "@/constant/type";
 import { addItemToCart } from "@/lib/actions/auth";
@@ -14,6 +12,8 @@ import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Label from "@/components/ui/label";
+import Button from "@/components/ui/button";
 
 export default function Page() {
   const { id } = useParams();
@@ -146,29 +146,29 @@ export default function Page() {
                 <div className="flex items-center gap-2 text-detail">
                   <p className="text-white/50">Type:</p>
                   <RadioGroup
-                        value={isPhysical ? "physical" : "digital"}
-                        onValueChange={(value) =>
-                          setIsPhysical(value === "physical")
-                        }
-                        className="flex flex-row text-white"
-                      >
-                        <div className="flex items-center  space-x-2">
-                          <RadioGroupItem
-                            value="digital"
-                            id="r1"
-                            className="border-white"
-                          />
-                          <p>Digital</p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem
-                            value="physical"
-                            id="r2"
-                            className="border-white"
-                          />
-                          <p>Physical</p>
-                        </div>
-                      </RadioGroup>
+                    value={isPhysical ? "physical" : "digital"}
+                    onValueChange={(value) =>
+                      setIsPhysical(value === "physical")
+                    }
+                    className="flex flex-row text-white"
+                  >
+                    <div className="flex items-center  space-x-2">
+                      <RadioGroupItem
+                        value="digital"
+                        id="r1"
+                        className="border-white"
+                      />
+                      <p>Digital</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="physical"
+                        id="r2"
+                        className="border-white"
+                      />
+                      <p>Physical</p>
+                    </div>
+                  </RadioGroup>
                 </div>
               )}
             </div>
