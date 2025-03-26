@@ -13,19 +13,19 @@ export default function Footer() {
             Copyright &copy; 2024. All right reserved.
           </div>
           <nav className="flex gap-1 md:gap-3 font-medium text-xs md:text-xl text-white">
-            <a href="" className="flex">
+            <a className="flex">
               <span className="">
                 Youtube
               </span>
               <Arrowright className="text-white size-4 md:size-5" />
             </a>
-            <a href="" className="flex">
+            <a className="flex">
               <span className="">
                 Facebook
               </span>
               <Arrowright className="text-white size-4 md:size-5" />
             </a>
-            <a href="" className="flex">
+            <a className="flex">
               <span className="">
                 Instagram
               </span>

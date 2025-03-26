@@ -72,7 +72,7 @@ export const SigninForm = () => {
           Don&apos;t have an account yet ?{" "}
           <Link href={"/signup"}>
             <span className="px-1 transition-all duration-300 ease-in-out text-darkblue shadow-[inset_0_0_0_0_rgb(0,208,255)] hover:shadow-[inset_100px_0_0_0_rgb(0,208,255)] hover:text-black">
-              Get it now
+              Create one
             </span>
           </Link>
         </p>

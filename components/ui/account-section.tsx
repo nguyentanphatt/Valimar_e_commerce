@@ -10,8 +10,6 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const AccountSection = async ({className} : {className?:string}) => {
   const session = await auth();
-  console.log(session);
-  
   if (session?.user) {
     return (
       <div>

@@ -3,7 +3,7 @@ import Button from "@/components/ui/button";
 import ItemPrice from "@/components/ui/item-price";
 import { RemoveIcon } from "@/constant/image";
 import { CartItemProps, CartProps } from "@/constant/type";
-import { getUserSubcription } from "@/lib/actions/auth";
+import { getUserDetail } from "@/lib/actions/auth";
 import { fetchCart, removeFromCart, totalCart } from "@/services/cartService";
 import { checkPromocode } from "@/services/gameService";
 import { AxiosError } from "axios";
@@ -77,7 +77,7 @@ const Page = () => {
 
   const subscription = async () => {
     try {
-      const response = await getUserSubcription();
+      const response = await getUserDetail();
       setUserSubscription(response.plan);
     } catch (error) {
       console.error(error);

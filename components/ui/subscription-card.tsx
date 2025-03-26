@@ -28,9 +28,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
 
     localStorage.setItem("cartData", JSON.stringify(cartData))
     router.push(`/checkout`)
-
-   
-    
   }
   return (
     <div className="w-[200px] lg:w-[250px] h-[417px] bg-[#434343] relative rounded-lg border-2 border-black/30 md:border-none p-2 flex flex-col gap-2 shadow-[0_4px_4px_rgba(0,0,0,0.25)] card-hover">

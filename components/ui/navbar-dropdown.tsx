@@ -1,93 +1,65 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-} from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { subcategories } from "@/constant/data";
-const NavbarDropdown = ({text} : {text:string}) => {
-  const pathname = usePathname();
-  const [isCategoryActive, setIsCategoryActive] = useState(false);
 
-  const handleDropdownToggle = () => {
-    setIsCategoryActive(!isCategoryActive);
-  };
+const NavbarDropdown = ({ text }: { text: string }) => {
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setTimeout(() => setIsOpen(false), 150);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div>
-      <Dropdown>
-        <DropdownTrigger>
-          <span
-            className={`relative cursor-pointer ${
-              isCategoryActive || pathname.startsWith("/category")
-                ? "text-darkblue"
-                : "group-hover:text-darkblue"
-            }`}
-            onClick={handleDropdownToggle}
-          >
-            {text}
-            <span
-              className={`absolute left-0 -bottom-1 md:-bottom-2 lg:-bottom-2 w-0 h-0.5 md:h-1 lg:h-1 bg-darkblue transition-all duration-300 ${
-                isCategoryActive || pathname.startsWith("/category")
-                  ? "w-full"
-                  : "group-hover:w-full"
-              }`}
-            ></span>
-          </span>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Categories"
-          variant="flat"
-          className=" bg-black text-white font-medium rounded-br-lg rounded-bl-xl transition shadow-[0_0_10px_5px_rgba(0,208,255,0.2)]"
-          onAction={() => setIsCategoryActive(false)}
-        >
-          <DropdownItem key="grid-menu" className="pl-6 pr-5 ">
-            <div className="grid grid-cols-3 md:w-[350px] lg:w-[450px] gap-5">
-              <div className="flex flex-col items-center justify-center">
-                <h3 className="font-bold text-lg text-darkblue mb-1">
-                  Gerne
-                </h3>
-                {subcategories.slice(0, 5).map((sub, index) => (
+    <div className="relative" ref={dropdownRef}>
+      <span
+        className={`relative cursor-pointer ${isOpen || pathname.startsWith("/category") ? "text-darkblue" : "group-hover:text-darkblue"}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {text}
+        <span
+          className={`absolute left-0 -bottom-1 md:-bottom-2 lg:-bottom-2 w-0 h-0.5 md:h-1 lg:h-1 bg-darkblue transition-all duration-300 ${
+            isOpen || pathname.startsWith("/category") ? "w-full" : "group-hover:w-full"
+          }`}
+        ></span>
+      </span>
+      {isOpen && (
+        <div className="absolute top-full -translate-x-1/3 mt-2 w-72 md:w-96 bg-black text-white font-medium rounded-lg z-50 shadow-lg p-4">
+          <div className="grid grid-cols-3 gap-5">
+            {Array.from({ length: 3 }, (_, col) => (
+              <div key={col} className="flex flex-col">
+                {subcategories.slice(col * 5, col * 5 + 5).map((sub, index) => (
                   <p key={index} className="mb-2">
                     <Link href={sub.href}>
-                      <span className="text-lg hover:text-darkblue transition-all duration-200">
-                        {sub.name}
-                      </span>
+                      <span className="text-lg hover:text-darkblue transition-all duration-200">{sub.name}</span>
                     </Link>
                   </p>
                 ))}
               </div>
-              <div className="flex flex-col items-center justify-center">
-                <div className="h-7 mb-1.5"></div>
-                {subcategories.slice(5, 10).map((sub, index) => (
-                  <p key={index} className="mb-2">
-                    <Link href={sub.href}>
-                      <span className="text-lg hover:text-darkblue transition-all duration-200">
-                        {sub.name}
-                      </span>
-                    </Link>
-                  </p>
-                ))}
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <div className="h-7 mb-1.5"></div>
-                {subcategories.slice(10, 15).map((sub, index) => (
-                  <p key={index} className="mb-2">
-                    <Link href={sub.href}>
-                      <span className="text-lg hover:text-darkblue transition-all duration-200">
-                        {sub.name}
-                      </span>
-                    </Link>
-                  </p>
-                ))}
-              </div>
-            </div>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

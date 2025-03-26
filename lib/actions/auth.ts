@@ -1,8 +1,7 @@
 "use server";
 
 import { addToCart } from "@/services/cartService";
-import { signIn, signOut } from "../auth";
-import { getUser } from "../getUser";
+import { auth, signIn, signOut } from "../auth";
 import { userDetail } from "@/services/userService";
 
 export const login = async () => {
@@ -111,12 +110,13 @@ export const addItemToCart = async (
   }
 };
 
+export async function getUser() {
+    const session = await auth()
+    return session || null
+}
 
-
-export const getUserSubcription = async () => {
-  
+export const getUserDetail = async () => {
   const session = await getUser();
-
   if (session?.user?.email) {
     const userdetail = await userDetail(session?.user?.email);
     return userdetail
@@ -124,4 +124,15 @@ export const getUserSubcription = async () => {
     throw new Error("User email is undefined");
   }
 }
+
+export const getUserId = async () => {
+  const session = await getUser();
+  if (session?.user?.email) {
+    const userdetail = await userDetail(session?.user?.email);
+    return userdetail
+  } else {
+    throw new Error("User email is undefined");
+  }
+}
+
 

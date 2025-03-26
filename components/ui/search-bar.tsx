@@ -44,6 +44,12 @@ export default function SearchBar({ className }: { className?: string }) {
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="relative">
       <div className="md:flex flex-row md:gap-2">
@@ -59,6 +65,7 @@ export default function SearchBar({ className }: { className?: string }) {
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
         </div>
         <Button

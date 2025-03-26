@@ -8,8 +8,6 @@ import { UserProps } from "@/constant/type";
 export default function SubscriptionClient({ email }: { email: string }) {
   const [user, setUser] = useState<UserProps>();
 
-  
-
   useEffect(() => {
     const getUserDetail = async (email: string) => {
       try {
@@ -32,7 +30,7 @@ export default function SubscriptionClient({ email }: { email: string }) {
     const checkIndex = plans.indexOf(planToCheck);
 
     if (currentIndex === checkIndex) return "Current Plan";
-    if (currentIndex > checkIndex) return "Owner";
+    if (currentIndex > checkIndex) return "Owned";
 
     return "Upgrade Plan";
   };
