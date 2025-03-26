@@ -20,7 +20,6 @@ import {
 } from "@/services/gameService";
 import ItemGridSection from "@/components/ui/item-grid-section";
 import Banner from "@/components/common/banner";
-import { getUserId } from "@/lib/actions/auth";
 
 export default function Home() {
   const [data, setData] = useState([]);

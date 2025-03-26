@@ -16,9 +16,10 @@ export default async function PhoneNavbar() {
   try {
     userDetail = await getUserDetail();
     console.log(userDetail);
-    
   } catch (error) {
-    userDetail = null
+    console.log(error);
+    
+    userDetail = null;
   }
   return (
     <div>
@@ -35,7 +36,10 @@ export default async function PhoneNavbar() {
             </Link>
           </li>
           <li>
-            <Link href={`/cart/${userDetail.id}`} className="flex flex-col">
+            <Link
+              href={userDetail ? `/cart/${userDetail.id}` : "/login"}
+              className="flex flex-col"
+            >
               <FontAwesomeIcon
                 icon={faBagShopping}
                 className="text-white size-7"
@@ -43,7 +47,7 @@ export default async function PhoneNavbar() {
             </Link>
           </li>
           <li>
-            <AccountSection className="block size-7 md:hidden" />    
+            <AccountSection className="block size-7 md:hidden" />
           </li>
         </ul>
       </div>
