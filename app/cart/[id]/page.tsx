@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import ItemPrice from "@/components/ui/item-price";
 import { RemoveIcon } from "@/constant/image";
 import { CartItemProps, CartProps } from "@/constant/type";

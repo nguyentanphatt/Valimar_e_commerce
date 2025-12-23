@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import FilterMenu from "@/components/ui/filter-menu";
 import GameCard from "@/components/ui/game-card";
 import SearchBar from "@/components/ui/search-bar";

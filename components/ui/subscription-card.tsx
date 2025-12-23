@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import Button from "./button";
+import Button from "./Button";
 import { SubscriptionCardProps } from "@/constant/type";
 import { Star } from "@/constant/image";
 import { twMerge } from "tailwind-merge";

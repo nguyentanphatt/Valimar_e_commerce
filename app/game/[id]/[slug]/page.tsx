@@ -12,9 +12,9 @@ import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import Label from "@/components/ui/label";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import Link from "next/link";
+import Label from "@/components/ui/Label";
 
 export default function Page() {
   const { id } = useParams();

@@ -1,6 +1,6 @@
 "use client";
 import React, { HTMLAttributes } from "react";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { slug } from "@/lib/slug";

@@ -1,6 +1,6 @@
 "use client";
 import { twMerge } from "tailwind-merge";
-import Button from "./button";
+import Button from "./Button";
 import { useEffect, useState } from "react";
 import { searchGames } from "@/services/gameService";
 import { GameProps } from "@/constant/type";

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 import { bannerInfo } from "@/constant/data";
 import { BannerItemProps } from "@/constant/type";
 import { useRouter } from "next/navigation";

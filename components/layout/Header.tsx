@@ -3,7 +3,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import SearchBar from "../ui/search-bar";
 import { logo } from "@/constant/image";
-import Navbar from "../common/navbar";
+import Navbar from "../common/Navbar";
 
 const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);

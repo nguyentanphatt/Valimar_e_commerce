@@ -19,8 +19,8 @@ import { Menu } from "@/constant/image";
 import FilterMenu from "@/components/ui/filter-menu";
 import Link from "next/link";
 import { slug } from "@/lib/slug";
-import Button from "@/components/ui/button";
-import Label from "@/components/ui/label";
+import Button from "@/components/ui/Button";
+import Label from "@/components/ui/Label";
 
 export default function Page() {
   const [isHover, setIsHover] = useState(false);

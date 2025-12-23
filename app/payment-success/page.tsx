@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { CheckoutSuccessIcon } from "@/constant/image";
 import { CartDataProps, UserProps } from "@/constant/type";
 import { sendMail } from "@/lib/send-mail";

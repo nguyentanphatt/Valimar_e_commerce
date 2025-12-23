@@ -5,7 +5,7 @@ import { motion, useAnimate } from "framer-motion";
 import SearchBar from "@/components/ui/search-bar";
 
 import AdvertismentBanner from "@/components/common/advertisment-banner";
-import Label from "@/components/ui/label";
+import Label from "@/components/ui/Label";
 import ItemSection from "@/components/ui/item-section";
 import {
   hollow_banner,
@@ -19,7 +19,7 @@ import {
   getGameWithDiscount,
 } from "@/services/gameService";
 import ItemGridSection from "@/components/ui/item-grid-section";
-import Banner from "@/components/common/banner";
+import Banner from "@/components/common/Banner";
 
 export default function Home() {
   const [data, setData] = useState([]);

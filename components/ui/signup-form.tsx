@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Button from "./button";
+import Button from "./Button";
 import Link from "next/link";
 import { userSignUp } from "@/services/userService";
 import { GoogleSignInButton } from "./google-signin-button";

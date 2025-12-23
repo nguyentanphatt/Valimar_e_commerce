@@ -2,7 +2,7 @@
 import { ItemGridSectionProps } from "@/constant/type";
 import React, { useEffect, useState } from "react";
 import ItemCard from "./item-card";
-import Button from "./button";
+import Button from "./Button";
 
 export default function ItemGridSection({ data }: ItemGridSectionProps) {
   const [rows, setRows] = useState(3);
